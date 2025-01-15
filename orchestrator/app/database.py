@@ -23,15 +23,12 @@ class DatabaseHandler:
         self.connect()
 
     def connect(self):
-        """
-        Connect to the database.
-        """
+        """Connect to the database."""
         if self.db_type == "sqlite":
             self._connect_sqlite(self.db_file)
 
     def _connect_sqlite(self, db_file):
-        """
-        Connect to a SQLite database."""
+        """Connect to a SQLite database."""
         try:
             self.connection = sqlite3.connect(db_file, check_same_thread=False)
             self.create_tables()
@@ -39,22 +36,19 @@ class DatabaseHandler:
             print(f"Error connecting to SQLite: {e}")
 
     def create_tables(self):
-        """
-        Create the tables in the database."""
+        """Create the tables in the database."""
         for table, queries in self.create_query[self.db_type].items():
             self._create_or_update_table(table, queries)
 
     def _create_or_update_table(self, table_name, queries):
-        """
-        Create or update a table in the database."""
+        """Create or update a table in the database."""
         if not self._table_exists(table_name):
             self._create_table(queries["create"])
         else:
             self._update_table(table_name, queries["columns"])
 
     def _table_exists(self, table_name):
-        """
-        Check if a table exists in the database."""
+        """Check if a table exists in the database."""
         cursor = self.connection.cursor()
         if self.db_type == "sqlite":
             cursor.execute(
@@ -67,16 +61,14 @@ class DatabaseHandler:
         return exists
 
     def _create_table(self, create_query):
-        """
-        Create a table in the database."""
+        """Create a table in the database."""
         cursor = self.connection.cursor()
         cursor.execute(create_query)
         self.connection.commit()
         cursor.close()
 
     def _update_table(self, table_name, columns):
-        """
-        Update a table in the database."""
+        """Update a table in the database."""
         cursor = self.connection.cursor()
         existing_columns = self._get_existing_columns(table_name)
         for column, column_def in columns.items():
@@ -88,8 +80,7 @@ class DatabaseHandler:
                 self.connection.commit()
 
     def _get_existing_columns(self, table_name):
-        """
-        Get the existing columns in a table."""
+        """Get the existing columns in a table."""
         cursor = self.connection.cursor()
         if self.db_type == "sqlite":
             cursor.execute(f"PRAGMA table_info({table_name})")
@@ -101,8 +92,7 @@ class DatabaseHandler:
         return columns
 
     def execute(self, query, params=None):
-        """
-        Execute a query on the database."""
+        """Execute a query on the database."""
         cursor = self.connection.cursor()
         try:
             if params:
@@ -118,8 +108,7 @@ class DatabaseHandler:
             cursor.close()
 
     def fetchall(self):
-        """
-        Fetch all rows from the database."""
+        """Fetch all rows from the database."""
         cursor = self.connection.cursor()
         try:
             return cursor.fetchall() if cursor else None
@@ -130,8 +119,7 @@ class DatabaseHandler:
             cursor.close()
 
     def fetchone(self):
-        """
-        Fetch one row from the database."""
+        """Fetch one row from the database."""
         cursor = self.connection.cursor()
         try:
             return cursor.fetchone() if cursor else None
@@ -142,7 +130,6 @@ class DatabaseHandler:
             cursor.close()
 
     def close(self):
-        """
-        Close the database connection."""
+        """Close the database connection."""
         if self.connection:
             self.connection.close()
