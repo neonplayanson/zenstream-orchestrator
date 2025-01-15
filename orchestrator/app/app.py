@@ -50,7 +50,7 @@ class Orchestrator:
             security="apiKey",
             version=self.version,
             title="ZenStream API",
-            description="ZenStream Orchestrator Authentication API",
+            description="ZenStream Orchestrator API",
             doc="/swagger/",
         )
 
