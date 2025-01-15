@@ -1,4 +1,4 @@
-name: Increment Version
+name: Increment Backend Version
 
 on:
   push:
