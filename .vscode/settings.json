@@ -7,7 +7,7 @@
     "psi-header.changes-tracking": {
         "isActive": true,
         "include": [
-            "py"
+            "python"
         ],
         "enforceHeader": true,
         "exclude": [],
