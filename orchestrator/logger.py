@@ -27,7 +27,7 @@ class Logger:
         """
         name = "NEXTCORD_AUTHGUARD"
         self.logger = logging.getLogger(name)
-        self.logger.setLevel(self._get_logging_level(level))  # Set the logger level
+        self.logger.setLevel(self._get_logging_level(level))
 
         self._configure_console_handler()
 
@@ -45,9 +45,7 @@ class Logger:
         Returns:
             int: Corresponding logging level constant.
         """
-        return self.LOG_LEVELS.get(
-            level_str, logging.DEBUG
-        )  # Default to DEBUG if level_str is not found
+        return self.LOG_LEVELS.get(level_str, logging.DEBUG)
 
     def _configure_console_handler(self):
         """
