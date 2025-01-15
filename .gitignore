@@ -229,13 +229,6 @@ fabric.properties
 *.db
 
 #Other stuff
-app.py
-launcher.py
-logs/
-static/
-uploads/
-templates/
-docs/
 .idea/codeStyles/codeStyleConfig.xml
 .idea/copyright/profiles_settings.xml
 .idea/copyright/Rystal.xml
