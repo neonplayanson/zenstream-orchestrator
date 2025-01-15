@@ -53,6 +53,9 @@ ZenStream Orchestrator is a robust application server that extends the functiona
    python init.py
    ```
 
+## 🖥️ For Developers
+Please see [`DEVELOPER`](/DEVELOPER.md) for more information.
+
 ## 📜 License
 
 Distributed under the GPL-3.0 license. See [`LICENSE`](/LICENSE) for more information.
