@@ -31,7 +31,7 @@ class DatabaseHandler:
 
     def _create_or_update_table(self, table_name, queries):
         if not self._table_exists(table_name):
-            self._create_table(table_name, queries["create"])
+            self._create_table(queries["create"])
         else:
             self._update_table(table_name, queries["columns"])
 
@@ -47,7 +47,9 @@ class DatabaseHandler:
         cursor.close()
         return exists
 
-    def _create_table(self, table_name, create_query):
+    def _create_table(self, create_query):
+        """
+        Create a table in the database."""
         cursor = self.connection.cursor()
         cursor.execute(create_query)
         self.connection.commit()
