@@ -13,9 +13,9 @@ load_dotenv()
 
 from logger import Logger
 from app.app import Orchestrator
-
+from version import __version__
 
 if __name__ == "__main__":
     logger = Logger()
-    orchestrator = Orchestrator()
+    orchestrator = Orchestrator(logger, __version__)
     orchestrator.create()
