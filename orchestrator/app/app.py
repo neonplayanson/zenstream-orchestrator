@@ -38,6 +38,7 @@ class Orchestrator:
             raise Exception("Environment variable `SECRET_KEY` not set")
 
         self.app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+        self.app.config["RESTX_MASK_SWAGGER"] = False
 
         api_blueprint = Blueprint("api", __name__, url_prefix="/api")
 
