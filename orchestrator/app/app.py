@@ -45,9 +45,8 @@ class Orchestrator:
             api_blueprint,
             authorizations={
                 "token": {"type": "apiKey", "in": "header", "name": "TOKEN"},
-                "apiKey": {"type": "apiKey", "in": "header", "name": "X-API-KEY"},
             },
-            security="apiKey",
+            security="token",
             version=self.version,
             title="ZenStream API",
             description="ZenStream Orchestrator API",
@@ -55,9 +54,8 @@ class Orchestrator:
         )
 
         for api_namespace in api_namespaces:
-            for item in api_namespace:
-                self.api.add_namespace(item, "/")
-                self.logger.info(f"Registered API namespace: {item.name}")
+            self.api.add_namespace(api_namespace, "/")
+            self.logger.info(f"Registered API namespace: {api_namespace.name}")
 
         self.app.register_blueprint(api_blueprint)
 
