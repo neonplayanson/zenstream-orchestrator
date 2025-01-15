@@ -4,3 +4,4 @@ python-dotenv>=1.0.1
 requests>=2.25.1
 waitress>=3.0.2
 flask-socketio>=5.5.1
+termcolor>=1.1.0
