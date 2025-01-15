@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    types:
+      - closed
 
 jobs:
   increment-version:
@@ -28,6 +31,15 @@ jobs:
             echo "::set-output name=increment_version::false"
           else
             echo "::set-output name=increment_version::true"
+          fi
+
+      - name: Check pr is merged
+        id: check_commit
+        run: |
+          if [[ "${{ github.event.pull_request.merged }}" == "true" ]]; then
+            echo "increment_version=true" >> $GITHUB_ENV
+          else
+            echo "increment_version=false" >> $GITHUB_ENV
           fi
 
       - name: Increment version
