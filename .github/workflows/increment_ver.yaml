@@ -34,7 +34,7 @@ jobs:
           fi
 
       - name: Check pr is merged
-        id: check_commit
+        id: check_pr
         run: |
           if [[ "${{ github.event.pull_request.merged }}" == "true" ]]; then
             echo "increment_version=true" >> $GITHUB_ENV
