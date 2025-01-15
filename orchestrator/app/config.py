@@ -7,11 +7,22 @@ from .database import DatabaseHandler
 from logger import Logger
 import os
 
-config = None
-
 
 class Config:
-    def __init__(self, logger: Logger = None):
+    _instance = None
+
+    def __new__(
+        cls,
+    ):
+        if cls._instance is None:
+            cls._instance = super(Config, cls).__new__(cls)
+
+            cls._instance._initialize()
+        return cls._instance
+
+    def _initialize(
+        self,
+    ):
         """
         Initialize the configuration handler.
 
@@ -56,9 +67,9 @@ class Config:
         return self._database
 
 
-def load_config(logger: Logger = None) -> Config:
+config = Config()
+
+
+def load_config() -> Config:
     """Load the configuration handler."""
-    global config
-    if config is None:
-        config = Config(logger=logger)
-    return config
+    return Config()
