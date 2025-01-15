@@ -4,8 +4,8 @@
 ### ======================================================================
 
 import logging
-
-
+import os
+from datetime import datetime
 from termcolor import colored
 
 
@@ -20,16 +20,17 @@ class Logger:
 
     def __init__(self, level="DEBUG"):
         """
-        Initializes the Logger instance by setting up a logger with a specific name and configuring the console handler.
-
-        Args:
-            level (str): Logging level as a string. Default is 'DEBUG'.
+        Initializes the Logger instance by setting up both file and console handlers.
         """
-        name = "NEXTCORD_AUTHGUARD"
+        name = "ZENSTREAM_ORCHESTRATOR"
         self.logger = logging.getLogger(name)
         self.logger.setLevel(self._get_logging_level(level))
 
+        self.logs_dir = os.path.join(os.getcwd(), "logs")
+        os.makedirs(self.logs_dir, exist_ok=True)
+
         self._configure_console_handler()
+        self._configure_file_handler()
 
     @property
     def __class__(self):
@@ -58,6 +59,21 @@ class Logger:
         console_handler.setFormatter(formatter)
 
         self.logger.addHandler(console_handler)
+
+    def _configure_file_handler(self):
+        """
+        Configures file handler with timestamped filename
+        """
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        log_file = os.path.join(self.logs_dir, f"zenstream_{timestamp}.txt")
+
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setLevel(self.logger.level)
+
+        formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
+        file_handler.setFormatter(formatter)
+
+        self.logger.addHandler(file_handler)
 
     @staticmethod
     def _color_message(level, message):
