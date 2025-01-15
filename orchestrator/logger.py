@@ -63,7 +63,7 @@ class Logger:
     def _configure_file_handler(self):
         """Configures file handler with timestamped filename"""
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        log_file = os.path.join(self.logs_dir, f"zenstream_{timestamp}.txt")
+        log_file = os.path.join(self.logs_dir, f"{timestamp}.txt")
 
         file_handler = logging.FileHandler(log_file)
         file_handler.setLevel(self.logger.level)
