@@ -21,8 +21,7 @@ class Config:
         self.create_database()
 
     def create_database(self):
-        """
-        Create the database handler."""
+        """Create the database handler."""
         if os.path.exists(os.path.join(os.getcwd(), "sqlite")) is False:
             os.makedirs(os.path.join(os.getcwd(), "sqlite"))
         self._database = DatabaseHandler(
@@ -53,14 +52,12 @@ class Config:
 
     @property
     def database(self):
-        """
-        Get the database handler."""
+        """Get the database handler."""
         return self._database
 
 
 def load_config(logger: Logger = None) -> Config:
-    """
-    Load the configuration handler."""
+    """Load the configuration handler."""
     global config
     if config is None:
         config = Config(logger=logger)
