@@ -5,8 +5,6 @@
 
 import sqlite3
 
-from mysql.connector import Error
-
 
 class DatabaseHandler:
     def __init__(self, db_type, create_query, db_file=None):
@@ -86,7 +84,7 @@ class DatabaseHandler:
                 cursor.execute(query)
             self.connection.commit()
             return cursor.fetchall()
-        except (sqlite3.Error, Error) as e:
+        except sqlite3.Error as e:
             print(f"Database error: {e}")
             return None
         finally:
@@ -96,7 +94,7 @@ class DatabaseHandler:
         cursor = self.connection.cursor()
         try:
             return cursor.fetchall() if cursor else None
-        except (sqlite3.Error, Error) as e:
+        except sqlite3.Error as e:
             print(f"Database error: {e}")
             return None
         finally:
@@ -106,7 +104,7 @@ class DatabaseHandler:
         cursor = self.connection.cursor()
         try:
             return cursor.fetchone() if cursor else None
-        except (sqlite3.Error, Error) as e:
+        except sqlite3.Error as e:
             print(f"Database error: {e}")
             return None
         finally:
