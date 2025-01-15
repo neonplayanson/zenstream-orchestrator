@@ -20,6 +20,7 @@ class UserAuthenticate(Resource):
     get_parser = reqparse.RequestParser()
     get_parser.add_argument("token", type=str, help="The auth token.", location="args")
 
+    @authenticate
     @api_namespace_user.doc(parser=get_parser)
     @api_namespace_user.marshal_with(
         get_model, description="Check if the user is authorized"
