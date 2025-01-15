@@ -1,17 +1,3 @@
-/*
- * Filename: x:\VSC\zenstream-orchestrator\gitignore.txt
- * Path: x:\VSC\zenstream-orchestrator
- * Created Date: Wednesday, January 15th 2025, 4:07:19 pm
- * Author: Poco
- * 
- * Copyright (c) 2025 Your Company
- */
-
-
-
-
-
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
