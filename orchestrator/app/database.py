@@ -8,6 +8,14 @@ import sqlite3
 
 class DatabaseHandler:
     def __init__(self, db_type, create_query, db_file=None):
+        """
+        Initialize the database handler.
+
+        Args:
+            db_type (str): The type of database to connect to.
+            create_query (dict): A dictionary containing the create query for each table.
+            db_file (str): The path to the database file.
+        """
         self.db_type = db_type
         self.create_query = create_query
         self.db_file = db_file
@@ -15,10 +23,15 @@ class DatabaseHandler:
         self.connect()
 
     def connect(self):
+        """
+        Connect to the database.
+        """
         if self.db_type == "sqlite":
             self._connect_sqlite(self.db_file)
 
     def _connect_sqlite(self, db_file):
+        """
+        Connect to a SQLite database."""
         try:
             self.connection = sqlite3.connect(db_file, check_same_thread=False)
             self.create_tables()
@@ -26,16 +39,22 @@ class DatabaseHandler:
             print(f"Error connecting to SQLite: {e}")
 
     def create_tables(self):
+        """
+        Create the tables in the database."""
         for table, queries in self.create_query[self.db_type].items():
             self._create_or_update_table(table, queries)
 
     def _create_or_update_table(self, table_name, queries):
+        """
+        Create or update a table in the database."""
         if not self._table_exists(table_name):
             self._create_table(queries["create"])
         else:
             self._update_table(table_name, queries["columns"])
 
     def _table_exists(self, table_name):
+        """
+        Check if a table exists in the database."""
         cursor = self.connection.cursor()
         if self.db_type == "sqlite":
             cursor.execute(
@@ -56,6 +75,8 @@ class DatabaseHandler:
         cursor.close()
 
     def _update_table(self, table_name, columns):
+        """
+        Update a table in the database."""
         cursor = self.connection.cursor()
         existing_columns = self._get_existing_columns(table_name)
         for column, column_def in columns.items():
@@ -67,6 +88,8 @@ class DatabaseHandler:
                 self.connection.commit()
 
     def _get_existing_columns(self, table_name):
+        """
+        Get the existing columns in a table."""
         cursor = self.connection.cursor()
         if self.db_type == "sqlite":
             cursor.execute(f"PRAGMA table_info({table_name})")
@@ -78,6 +101,8 @@ class DatabaseHandler:
         return columns
 
     def execute(self, query, params=None):
+        """
+        Execute a query on the database."""
         cursor = self.connection.cursor()
         try:
             if params:
@@ -93,6 +118,8 @@ class DatabaseHandler:
             cursor.close()
 
     def fetchall(self):
+        """
+        Fetch all rows from the database."""
         cursor = self.connection.cursor()
         try:
             return cursor.fetchall() if cursor else None
@@ -103,6 +130,8 @@ class DatabaseHandler:
             cursor.close()
 
     def fetchone(self):
+        """
+        Fetch one row from the database."""
         cursor = self.connection.cursor()
         try:
             return cursor.fetchone() if cursor else None
@@ -113,76 +142,7 @@ class DatabaseHandler:
             cursor.close()
 
     def close(self):
+        """
+        Close the database connection."""
         if self.connection:
             self.connection.close()
-
-
-database = DatabaseHandler(
-    db_type="sqlite",
-    create_query={
-        "sqlite": {
-            "users": {
-                "create": """
-                    CREATE TABLE IF NOT EXISTS users (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        username TEXT UNIQUE NOT NULL,
-                        password TEXT NOT NULL,
-                        account_identifier TEXT UNIQUE NOT NULL,
-                        secret_key TEXT NOT NULL,
-                        email TEXT NOT NULL,
-                        is_admin BOOLEAN DEFAULT FALSE
-                    )
-                """,
-                "columns": {
-                    "id": "INTEGER PRIMARY KEY AUTOINCREMENT",
-                    "username": "TEXT UNIQUE NOT NULL",
-                    "password": "TEXT NOT NULL",
-                    "account_identifier": "TEXT UNIQUE NOT NULL",
-                    "secret_key": "TEXT NOT NULL",
-                    "email": "TEXT NOT NULL",
-                    "is_admin": "BOOLEAN DEFAULT FALSE",
-                },
-            },
-            "uploads": {
-                "create": """
-        CREATE TABLE IF NOT EXISTS uploads (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            original_name TEXT NOT NULL,
-            filename TEXT NOT NULL,
-            views INTEGER DEFAULT 0,
-            size INTEGER NOT NULL,
-            owner_identifier TEXT NOT NULL,
-            upload_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            password_hash TEXT,
-            FOREIGN KEY(owner_identifier) REFERENCES users(account_identifier)
-        )
-    """,
-                "columns": {
-                    "id": "INTEGER PRIMARY KEY AUTOINCREMENT",
-                    "original_name": "TEXT NOT NULL",
-                    "filename": "TEXT NOT NULL",
-                    "views": "INTEGER DEFAULT 0",
-                    "size": "INTEGER NOT NULL",
-                    "owner_identifier": "TEXT NOT NULL",
-                    "password_hash": "TEXT",
-                    "upload_time": "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
-                },
-            },
-            "invites": {
-                "create": """
-                    CREATE TABLE IF NOT EXISTS invites (
-                        code TEXT PRIMARY KEY,
-                        used BOOLEAN DEFAULT FALSE
-                    )
-                """,
-                "columns": {
-                    "code": "TEXT PRIMARY KEY",
-                    "used": "BOOLEAN DEFAULT FALSE",
-                },
-            },
-        }
-    },
-    db_file="sqlite/xflask.db",
-)
-
-database.create_tables()
