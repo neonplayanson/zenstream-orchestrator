@@ -55,7 +55,7 @@ ZenStream Orchestrator is a robust application server that extends the functiona
 
 ## 📜 License
 
-Distributed under the MIT License. See [`LICENSE`](/LICENSE) for more information.
+Distributed under the GPL-3.0 license. See [`LICENSE`](/LICENSE) for more information.
 <br>
 <br>
 <br>
