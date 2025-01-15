@@ -247,3 +247,4 @@ fabric.properties
 .stfolder/
 .idea/**
 config/config.yaml
+/logs
