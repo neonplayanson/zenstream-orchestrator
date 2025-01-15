@@ -1,0 +1,48 @@
+{
+    "psi-header.config": {
+        "forceToTop": true,
+        "blankLinesAfter": 6,
+        "license": "Custom"
+    },
+    "psi-header.changes-tracking": {
+        "isActive": true,
+        "include": [],
+        "enforceHeader": true,
+        "exclude": [
+            "yaml",
+            "markdown",
+            "json",
+            "jsonc",
+            "txt",
+        ],
+        "excludeGlob": [
+            "out/**",
+            "src/**/*.xyz",
+            "**/settings.json",
+        ],
+        "autoHeader": "manualSave"
+    },
+    "psi-header.lang-config": [
+        {
+            "language": "python",
+            "begin": "### ======================================================================",
+            "prefix": "### ",
+            "end": "### ======================================================================\n",
+            "blankLinesAfter": 0
+        },
+    ],
+    "psi-header.templates": [
+        {
+            "language": "python",
+            "template": [
+                "ZenStream Orchestrator",
+                "Copyright 2019-2024 © Rystal. All Rights Reserved.",
+            ],
+            "changeLogCaption": "HISTORY:",
+            "changeLogHeaderLineCount": 2,
+            "changeLogEntryTemplate": [
+                "<<dateformat('YYYY-MM-DD')>>\t<<initials>>\t"
+            ]
+        },
+    ]
+}
