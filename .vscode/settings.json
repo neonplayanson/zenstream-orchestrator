@@ -6,15 +6,11 @@
     },
     "psi-header.changes-tracking": {
         "isActive": true,
-        "include": [],
-        "enforceHeader": true,
-        "exclude": [
-            "yaml",
-            "markdown",
-            "json",
-            "jsonc",
-            "txt",
+        "include": [
+            "py"
         ],
+        "enforceHeader": true,
+        "exclude": [],
         "excludeGlob": [
             "out/**",
             "src/**/*.xyz",
