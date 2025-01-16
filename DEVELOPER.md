@@ -19,12 +19,12 @@ To ensure secure access to the API, a token is required for authentication. The 
 
 ## 🔑 Authorization with API-Key
 
-To ensure secure access to the API, an API key is required for authentication. The API key is passed in the request header as `X-API-KEY`. Follow the steps below to authorize with an API key:
+To ensure secure access to the API, an API key is required for authentication. The API key is passed in the request header as `TOKEN`. Follow the steps below to authorize with an API key:
 
 1. **Create an API Key**:
    - Go to the dashboard.
    - Navigate to `Settings` and press `Create API Key` then copy the newly generated API Key.
 
 2. **Authorize with API Key**:
-   - This process is the same with using a `token`, pass the API Key in the request header as `X-API-KEY: your_api_key`.
+   - This process is the same with using a `token`, pass the API Key in the request header as `TOKEN: your_api_key`.
    

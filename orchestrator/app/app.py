@@ -38,6 +38,7 @@ class Orchestrator:
             raise Exception("Environment variable `SECRET_KEY` not set")
 
         self.app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+        self.app.config["RESTX_MASK_SWAGGER"] = False
 
         api_blueprint = Blueprint("api", __name__, url_prefix="/api")
 
@@ -45,19 +46,17 @@ class Orchestrator:
             api_blueprint,
             authorizations={
                 "token": {"type": "apiKey", "in": "header", "name": "TOKEN"},
-                "apiKey": {"type": "apiKey", "in": "header", "name": "X-API-KEY"},
             },
-            security="apiKey",
+            security="token",
             version=self.version,
             title="ZenStream API",
-            description="ZenStream Orchestrator Authentication API",
+            description="ZenStream Orchestrator API",
             doc="/swagger/",
         )
 
         for api_namespace in api_namespaces:
-            for item in api_namespace:
-                self.api.add_namespace(item, "/")
-                self.logger.info(f"Registered API namespace: {item.name}")
+            self.api.add_namespace(api_namespace, "/")
+            self.logger.info(f"Registered API namespace: {api_namespace.name}")
 
         self.app.register_blueprint(api_blueprint)
 

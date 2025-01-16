@@ -7,8 +7,12 @@ from functools import wraps
 
 
 def authenticate(func):
+    """
+    Authenticate decorator"""
     @wraps(func)
     def wrapper(*args, **kwargs):
+        """
+        Wrapper"""
         pass
 
     return wrapper
