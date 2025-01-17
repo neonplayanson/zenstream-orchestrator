@@ -14,6 +14,5 @@ def authenticate(func):
     def wrapper(*args, **kwargs):
         """
         Wrapper"""
-        pass
 
     return wrapper
