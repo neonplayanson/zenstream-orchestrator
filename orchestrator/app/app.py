@@ -7,7 +7,7 @@ import os
 
 from waitress import serve
 from flask import Blueprint, Flask
-from flask_restx import Api, Resource, fields
+from flask_restx import Api
 from logger import Logger
 from .config import load_config
 
