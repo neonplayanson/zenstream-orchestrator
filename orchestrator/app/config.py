@@ -4,7 +4,6 @@
 ### ======================================================================
 
 from .database import DatabaseHandler
-from logger import Logger
 import os
 
 

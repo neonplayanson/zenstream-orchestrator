@@ -4,7 +4,7 @@
 ### ======================================================================
 
 import random
-from flask_restx import Namespace, Resource, fields, reqparse
+from flask_restx import Resource, fields, reqparse
 from utils.wrappers import authenticate
 from . import api_namespace_user
 
