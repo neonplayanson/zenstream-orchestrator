@@ -6,7 +6,7 @@ test_patterns = ["tests/**"]
 name = "javascript"
 
   [analyzers.meta]
-  plugins = ["react"]
+  plugins = ["vue"]
   environment = [
     "nodejs",
     "browser"
