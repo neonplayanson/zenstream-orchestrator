@@ -4,7 +4,7 @@
 ### ======================================================================
 
 import random
-from flask_restx import Namespace, Resource, fields, reqparse
+from flask_restx import Resource, fields, reqparse
 from utils.wrappers import authenticate
 from . import api_namespace_user
 
@@ -26,9 +26,7 @@ class UserAuthenticate(Resource):
         get_model, description="Check if the user is authorized"
     )
     def get(self):
-        """
-        Check if the user is authorized.
-        """
+        """Check if the user is authorized."""
         args = self.get_parser.parse_args()
         is_authorized = random.choice([True, False])
         return {"authorized": is_authorized}

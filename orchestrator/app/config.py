@@ -4,7 +4,6 @@
 ### ======================================================================
 
 from .database import DatabaseHandler
-from logger import Logger
 import os
 
 
@@ -14,9 +13,7 @@ class Config:
     def __new__(
         cls,
     ):
-        """
-        Create a new instance of the configuration handler.
-        """
+        """Create a new instance of the configuration handler."""
         if cls._instance is None:
             cls._instance = super(Config, cls).__new__(cls)
 

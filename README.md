@@ -54,6 +54,7 @@ ZenStream Orchestrator is a robust application server that extends the functiona
    ```
 
 ## 🖥️ For Developers
+
 Please see [`DEVELOPER`](/DEVELOPER.md) for more information.
 
 ## 📜 License
@@ -62,6 +63,7 @@ Distributed under the GPL-3.0 license. See [`LICENSE`](/LICENSE) for more inform
 <br>
 <br>
 <br>
+
 <div align="center">
 	<p><small>Copyright © 2024 <a href="https://rystal.net">Rystal</a>. All rights reserved.</small></p>
 </div>

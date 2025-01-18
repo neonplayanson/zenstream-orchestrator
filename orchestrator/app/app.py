@@ -7,7 +7,7 @@ import os
 
 from waitress import serve
 from flask import Blueprint, Flask
-from flask_restx import Api, Resource, fields
+from flask_restx import Api
 from logger import Logger
 from .config import load_config
 
@@ -28,9 +28,7 @@ class Orchestrator:
         self.version = version
 
     def create(self):
-        """
-        Create the Orchestrator.
-        """
+        """Create the Orchestrator."""
         self.logger.info("Creating Orchestrator...")
         self.app = Flask(__name__)
 
@@ -63,9 +61,7 @@ class Orchestrator:
         self.serve()
 
     def serve(self):
-        """
-        Serve the Orchestrator.
-        """
+        """Serve the Orchestrator."""
         if os.getenv("DEBUG"):
             self.logger.info("Serving Orchestrator in debug mode...")
             self.app.run(debug=True, host="127.0.0.1", port=5090, use_reloader=False)

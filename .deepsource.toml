@@ -3,6 +3,16 @@ version = 1
 test_patterns = ["tests/**"]
 
 [[analyzers]]
+name = "javascript"
+
+  [analyzers.meta]
+  plugins = ["vue"]
+  environment = [
+    "nodejs",
+    "browser"
+  ]
+
+[[analyzers]]
 name = "python"
 
   [analyzers.meta]
@@ -10,3 +20,6 @@ name = "python"
 
 [[transformers]]
 name = "black"
+
+[[transformers]]
+name = "prettier"
