@@ -267,7 +267,6 @@ vite-plugin-ssr/
 
 # Editor settings
 .idea/
-.vscode/
 *.sublime*
 
 # macOS

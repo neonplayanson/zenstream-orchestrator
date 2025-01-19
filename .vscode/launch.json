@@ -1,0 +1,50 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Orchestrator: Backend",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/orchestrator/init.py",
+      "cwd": "${workspaceFolder}/orchestrator",
+      "console": "integratedTerminal",
+      "subProcess": true,
+      "env": {
+        "FLASK_ENV": "development"
+      },
+      "autoReload": {
+        "enable": true,
+        "pattern": [
+          "**/*.py"
+        ]
+      },
+      "args": [
+        "run",
+        "--no-debugger",
+        "--no-reload"
+      ]
+    },
+    {
+      "name": "Debug Orchestrator: Frontend",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173/",
+      "webRoot": "${workspaceFolder}/frontend",
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "chrome-error://chromewebdata/**"
+      ],
+      "preLaunchTask": "vite"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Orchestrator: Full Stack",
+      "configurations": [
+        "Debug Orchestrator: Backend",
+        "Debug Orchestrator: Frontend"
+      ]
+    }
+  ]
+}
