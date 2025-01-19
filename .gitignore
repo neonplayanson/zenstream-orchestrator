@@ -225,7 +225,6 @@ fabric.properties
 
 # Database stuff
 *.sqlite
-*.json
 *.db
 
 #Other stuff
