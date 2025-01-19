@@ -18,15 +18,13 @@ class UserAuthenticate(Resource):
         },
     )
     get_parser = reqparse.RequestParser()
-    get_parser.add_argument("token", type=str, help="The auth token.", location="args")
+    get_parser.add_argument("UserId", type=str, help="The user ID.", location="args")
 
     @authenticate
     @api_namespace_user.doc(parser=get_parser)
-    @api_namespace_user.marshal_with(
-        get_model, description="Check if the user is authorized"
-    )
+    @api_namespace_user.marshal_with(get_model, description="Get the user's profile.")
     def get(self):
-        """Check if the user is authorized."""
+        """Get the user's profile."""
         args = self.get_parser.parse_args()
         is_authorized = random.choice([True, False])
         return {"authorized": is_authorized}
