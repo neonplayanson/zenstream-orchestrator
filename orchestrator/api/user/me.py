@@ -26,5 +26,8 @@ class UserAuthenticate(Resource):
     def get(self):
         """Get the user's profile."""
         args = self.get_parser.parse_args()
+
+        user_id = args.get("UserId")
+
         is_authorized = random.choice([True, False])
-        return {"authorized": is_authorized}
+        return {"UserId": user_id, "authorized": is_authorized}
