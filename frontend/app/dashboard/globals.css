@@ -3,10 +3,16 @@
 @tailwind utilities;
 
 @layer components {
-  .gadget-small {
-    @apply w-[400px] h-96 bg-schemes-dark-surfaceContainerLow rounded-3xl;
+  .gadget-desktop {
+    @apply w-full bg-schemes-dark-surfaceContainerLow rounded-3xl;
   }
-  .gadget-big {
-    @apply w-[836px] h-96 bg-schemes-dark-surfaceContainerLow rounded-3xl;
+  .leftcol-padding {
+    @apply pl-16 pr-[18px] pb-16;
+  }
+  .rightcol-padding {
+    @apply pl-[18px] pr-16 pb-16;
+  }
+  .singlecol-padding {
+    @apply px-9 pb-9;
   }
 }

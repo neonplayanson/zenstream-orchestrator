@@ -12,14 +12,18 @@ export default function Dashboard() {
   return (
     <div className="w-full h-screen bg-schemes-dark-surfaceContainerLowest items-start justify-start">
       <Greeting />
-      <div className="flex flex-row flex-wrap items-start justify-center gap-9 p-12">
-        <div className="gadget-small"></div>
-        <div className="gadget-small"></div>
-        <div className="gadget-small"></div>
-        <div className="gadget-small"></div>
-        <div className="gadget-big"></div>
-        <div className="gadget-big"></div>
+      <div className="grid grid-cols-1 md:grid-cols-2 items-start justify-center pt-16">
+        <div className="flex flex-col items-start justify-start w-full h-full gap-9 singlecol-padding md:leftcol-padding">
+          <div className="gadget-desktop h-[32rem]"></div>
+          <div className="gadget-desktop h-96"></div>
+        </div>
+        <div className="flex flex-col items-start justify-start w-full h-full gap-9 singlecol-padding md:rightcol-padding">
+          <div className="gadget-desktop h-64"></div>
+          <div className="gadget-desktop h-96"></div>
+        </div>
       </div>
     </div>
   );
 }
+
+//todo: single column layout
