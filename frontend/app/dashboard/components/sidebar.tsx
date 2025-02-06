@@ -15,7 +15,7 @@ function Logo({ icon }: { icon: string }) {
         alt="icon"
         height={48}
         width={48}
-        unoptimized={true}
+        unoptimized
         priority
       />
     </div>
