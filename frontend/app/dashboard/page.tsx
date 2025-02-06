@@ -35,7 +35,7 @@ export default function Dashboard() {
                 <Button label="Generate" buttontype="submit" />
               </form>
             }
-           />
+          />
         </div>
         <div className="flex flex-col items-start justify-start w-full h-full gap-9 singlecol-padding md:rightcol-padding">
           <div className="gadget-desktop h-64" />
