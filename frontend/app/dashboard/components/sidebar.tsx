@@ -23,13 +23,13 @@ function Logo({ icon }: { icon: string }) {
 }
 
 function Seperator() {
-  return <div className="w-20 h-6 bg-opacity-0"></div>;
+  return <div className="w-20 h-6 bg-opacity-0" />;
 }
 
 function Tab({ icon, path }: TabParams) {
   return (
     <div className="flex items-center justify-center relative size-12 hover:size-14 ease-out transition-all duration-150 group">
-      <div className="absolute size-9 blur-none rounded-full group-hover:blur-md group-hover:bg-schemes-dark-onSurfaceVariant ease-out transition-all duration-150"></div>
+      <div className="absolute size-9 blur-none rounded-full group-hover:blur-md group-hover:bg-schemes-dark-onSurfaceVariant ease-out transition-all duration-150" />
       <a
         href={path}
         className="relative bg-schemes-dark-surfaceContainerLowest rounded-full size-12 flex items-center justify-center ease-out group-hover:size-14 group-hover:bg-schemes-dark-surfaceVariant transition-all duration-150"

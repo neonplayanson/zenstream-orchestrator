@@ -35,12 +35,12 @@ export default function Dashboard() {
                 <Button label="Generate" buttontype="submit" />
               </form>
             }
-          ></Gadget>
+           />
         </div>
         <div className="flex flex-col items-start justify-start w-full h-full gap-9 singlecol-padding md:rightcol-padding">
-          <div className="gadget-desktop h-64"></div>
-          <div className="gadget-desktop h-96"></div>
-          <div className="gadget-desktop h-96"></div>
+          <div className="gadget-desktop h-64" />
+          <div className="gadget-desktop h-96" />
+          <div className="gadget-desktop h-96" />
         </div>
       </div>
     </div>
