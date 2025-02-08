@@ -29,10 +29,10 @@ function Seperator() {
 function Tab({ icon, path }: TabParams) {
   return (
     <div className="flex items-center justify-center relative size-12 hover:size-14 ease-out transition-all duration-150 group">
-      <div className="absolute size-9 blur-none rounded-full group-hover:blur-md group-hover:bg-schemes-dark-onSurfaceVariant ease-out transition-all duration-150" />
+      <div className="absolute size-9 blur-none rounded-full group-hover:blur-md group-hover:bg-schemes-dark-on-surface-variant ease-out transition-all duration-150" />
       <a
         href={path}
-        className="relative bg-schemes-dark-surfaceContainerLowest rounded-full size-12 flex items-center justify-center ease-out group-hover:size-14 group-hover:bg-schemes-dark-surfaceVariant transition-all duration-150"
+        className="relative bg-schemes-dark-surface-container-lowest rounded-full size-12 flex items-center justify-center ease-out group-hover:size-14 group-hover:bg-schemes-dark-surface-variant transition-all duration-150"
       >
         {icon}
       </a>
@@ -42,12 +42,12 @@ function Tab({ icon, path }: TabParams) {
 
 export default function Navbar() {
   return (
-    <div className="fixed flex flex-col bg-schemes-dark-background h-full w-20 items-center justify-start border-r-[1px] border-schemes-dark-surfaceContainerLow ">
+    <div className="fixed flex flex-col bg-schemes-dark-background h-full w-20 items-center justify-start border-r-[1px] border-schemes-dark-surface-container-low">
       <Logo icon="/icons/icon.png" />
       <Seperator />
       <Tab
         icon={
-          <MdSpaceDashboard className="size-8 text-schemes-dark-onBackground" />
+          <MdSpaceDashboard className="size-8 text-schemes-dark-on-background" />
         }
         path="/dashboard"
       />

@@ -18,7 +18,7 @@ export default function DashboardLayout({
       <Head>
         <link rel="icon" href="../../public/favicon.ico" />
       </Head>
-      <body className="bg-schemes-dark-surfaceContainerLowest flex flex-row h-screen w-full">
+      <body className="bg-schemes-dark-surface-container-lowest flex flex-row h-screen w-full">
         {children}
       </body>
     </html>

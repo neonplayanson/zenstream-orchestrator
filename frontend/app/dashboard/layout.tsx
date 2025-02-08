@@ -18,9 +18,9 @@ export default function DashboardLayout({
       <Head>
         <link rel="icon" href="../../public/favicon.ico" />
       </Head>
-      <body className="bg-schemes-dark-surfaceContainerLowest flex flex-row h-screen w-full">
+      <body className="bg-schemes-dark-surface-container-lowest flex flex-row h-screen w-full">
         <Navbar />
-        <div className="flex-grow ml-20">{children}</div>
+        <div className="grow ml-20">{children}</div>
       </body>
     </html>
   );
