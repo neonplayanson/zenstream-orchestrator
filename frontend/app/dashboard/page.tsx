@@ -12,13 +12,13 @@ import {
 
 export default function Dashboard() {
   return (
-    <div className="w-full h-screen bg-schemes-dark-surfaceContainerLowest items-start justify-start">
+    <div className="w-full h-screen bg-schemes-dark-surface-container-lowest items-start justify-start">
       <Greeting user="user" />
       <div className="grid grid-cols-1 md:grid-cols-2 items-start justify-center pt-16">
         <div className="flex flex-col items-start justify-start w-full h-full gap-9 singlecol-padding md:leftcol-padding">
           <Gadget
             title="Generate API Key"
-            icon={<FaKey className="size-5 text-schemes-dark-onBackground " />}
+            icon={<FaKey className="size-5 text-schemes-dark-on-background" />}
             content={
               <form
                 method="POST"
