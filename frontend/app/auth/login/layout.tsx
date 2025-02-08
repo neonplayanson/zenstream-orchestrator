@@ -1,11 +1,11 @@
-import "../globals.css";
+import "../../globals.css";
 import React from "react";
-import Navbar from "./components/sidebar";
+
 import Head from "next/head";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "ZenStream | Dashboard",
+  title: "ZenStream | Login",
 };
 
 export default function DashboardLayout({
@@ -19,8 +19,7 @@ export default function DashboardLayout({
         <link rel="icon" href="../../public/favicon.ico" />
       </Head>
       <body className="bg-schemes-dark-surfaceContainerLowest flex flex-row h-screen w-full">
-        <Navbar />
-        <div className="flex-grow ml-20">{children}</div>
+        {children}
       </body>
     </html>
   );
