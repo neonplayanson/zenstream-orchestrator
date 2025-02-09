@@ -10,19 +10,14 @@
       "console": "integratedTerminal",
       "subProcess": true,
       "env": {
-        "FLASK_ENV": "development"
+        "FLASK_ENV": "development",
+        "SECRET_KEY": "your_secret_key"
       },
       "autoReload": {
         "enable": true,
-        "pattern": [
-          "**/*.py"
-        ]
+        "pattern": ["**/*.py"]
       },
-      "args": [
-        "run",
-        "--no-debugger",
-        "--no-reload"
-      ]
+      "args": ["run", "--no-debugger", "--no-reload"]
     },
     {
       "name": "Debug Orchestrator: Frontend",
@@ -31,10 +26,7 @@
       "url": "http://localhost:5173/",
       "webRoot": "${workspaceFolder}/frontend",
       "sourceMaps": true,
-      "skipFiles": [
-        "<node_internals>/**",
-        "chrome-error://chromewebdata/**"
-      ],
+      "skipFiles": ["<node_internals>/**", "chrome-error://chromewebdata/**"],
       "preLaunchTask": "vite"
     }
   ],
