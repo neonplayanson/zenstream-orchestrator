@@ -23,11 +23,10 @@
       "name": "Debug Orchestrator: Frontend",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:5173/",
+      "url": "http://localhost:3000/",
       "webRoot": "${workspaceFolder}/frontend",
       "sourceMaps": true,
-      "skipFiles": ["<node_internals>/**", "chrome-error://chromewebdata/**"],
-      "preLaunchTask": "vite"
+      "skipFiles": ["<node_internals>/**", "chrome-error://chromewebdata/**"]
     }
   ],
   "compounds": [
