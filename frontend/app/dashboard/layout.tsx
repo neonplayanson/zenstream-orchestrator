@@ -4,10 +4,18 @@ import Navbar from "./components/sidebar";
 import Head from "next/head";
 import type { Metadata } from "next";
 
+/**
+ * Metadata for the dashboard layout.
+ */
 export const metadata: Metadata = {
   title: "ZenStream | Dashboard",
 };
 
+/**
+ * DashboardLayout component that provides the layout for the dashboard pages.
+ * @param children - The child components to render inside the layout.
+ * @returns A React element containing the dashboard layout.
+ */
 export default function DashboardLayout({
   children,
 }: {

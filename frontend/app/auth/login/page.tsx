@@ -2,6 +2,10 @@
 import React from "react";
 import Image from "next/image";
 
+/**
+ * Login page component that displays the login form.
+ * @returns A React element containing the login page.
+ */
 export default function Dashboard() {
   return (
     <div className="flex w-full h-screen bg-linear-to-br from-schemes-dark-surface-container-lowest to-schemes-dark-medium-contrast-inverse-primary items-center justify-center">

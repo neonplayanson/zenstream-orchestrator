@@ -1,13 +1,20 @@
 import "../../globals.css";
 import React from "react";
-
 import Head from "next/head";
 import type { Metadata } from "next";
 
+/**
+ * Metadata for the login layout.
+ */
 export const metadata: Metadata = {
   title: "ZenStream | Login",
 };
 
+/**
+ * DashboardLayout component that provides the layout for the login pages.
+ * @param children - The child components to render inside the layout.
+ * @returns A React element containing the login layout.
+ */
 export default function DashboardLayout({
   children,
 }: {
