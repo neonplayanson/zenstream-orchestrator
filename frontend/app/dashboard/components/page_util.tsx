@@ -4,6 +4,16 @@ import React, { ReactElement } from "react";
 import { FaCopy } from "react-icons/fa";
 
 /**
+ * This file contains various reusable components for the dashboard page.
+ * Components included:
+ * - Greeting: Displays a welcome message.
+ * - Gadget: Displays a gadget with a title, icon, and content.
+ * - Codeblock: Displays a block of code with a copy button.
+ * - Checkbox: Displays a checkbox with a label.
+ * - Button: Displays a button with a label.
+ */
+
+/**
  * Greeting component that displays a welcome message.
  * @param user - The name of the user to greet.
  * @returns A React element containing the greeting message.
@@ -102,6 +112,12 @@ function Button({
   label: string;
   buttontype: "button" | "submit" | "reset" | undefined;
 }) {
+  /**
+   * Handles the click event for the button.
+   * Prevents the default form submission behavior and performs a custom action.
+   *
+   * @param event - The mouse event triggered by clicking the button.
+   */
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     //todo: generate api key

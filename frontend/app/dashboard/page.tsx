@@ -10,6 +10,10 @@ import {
   Button,
 } from "./components/page_util";
 
+/**
+ * Dashboard component that displays the main dashboard page.
+ * @returns A React element containing the dashboard page.
+ */
 export default function Dashboard() {
   return (
     <div className="w-full h-screen bg-schemes-dark-surface-container-lowest items-start justify-start">

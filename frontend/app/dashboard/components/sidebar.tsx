@@ -8,6 +8,15 @@ type TabParams = {
 };
 
 /**
+ * This file contains the components for the sidebar navigation.
+ * Components included:
+ * - Logo: Displays a logo image.
+ * - Seperator: Displays a separator.
+ * - Tab: Displays a tab with an icon and a link.
+ * - Navbar: Displays the navigation bar.
+ */
+
+/**
  * Logo component that displays a logo image.
  * @param icon - The path to the logo image.
  * @returns A React element containing the logo image.
