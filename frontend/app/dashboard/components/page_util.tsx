@@ -3,6 +3,11 @@
 import React, { ReactElement } from "react";
 import { FaCopy } from "react-icons/fa";
 
+/**
+ * Greeting component that displays a welcome message.
+ * @param user - The name of the user to greet.
+ * @returns A React element containing the greeting message.
+ */
 function Greeting({ user }: { user: string }) {
   return (
     <h1 className="text-4xl text-schemes-dark-on-background w-full pl-16 pt-16 font-sans font-semibold">
@@ -11,6 +16,13 @@ function Greeting({ user }: { user: string }) {
   );
 }
 
+/**
+ * Gadget component that displays a title, icon, and content.
+ * @param title - The title of the gadget.
+ * @param icon - The icon to display next to the title.
+ * @param content - The content to display inside the gadget.
+ * @returns A React element containing the gadget.
+ */
 function Gadget({
   title,
   icon,
@@ -35,7 +47,11 @@ function Gadget({
   );
 }
 
-//todo: support for syntax highlighting
+/**
+ * Codeblock component that displays a block of code with a copy button.
+ * @param code - The code to display inside the code block.
+ * @returns A React element containing the code block.
+ */
 function Codeblock({ code }: { code: string }) {
   return (
     <div className="flex flex-row h-12 w-full bg-schemes-dark-surface-dim shadow-inner shadow-schemes-dark-surface-container-lowest rounded-xl">
@@ -54,6 +70,11 @@ function Codeblock({ code }: { code: string }) {
   );
 }
 
+/**
+ * Checkbox component that displays a checkbox with a label.
+ * @param label - The label to display next to the checkbox.
+ * @returns A React element containing the checkbox and label.
+ */
 function Checkbox({ label }: { label: string }) {
   return (
     <div className="flex flex-row items-center justify-start gap-2 mr-6 mb-4">
@@ -68,6 +89,12 @@ function Checkbox({ label }: { label: string }) {
   );
 }
 
+/**
+ * Button component that displays a button with a label.
+ * @param label - The label to display on the button.
+ * @param buttontype - The type of the button (button, submit, or reset).
+ * @returns A React element containing the button.
+ */
 function Button({
   label,
   buttontype,

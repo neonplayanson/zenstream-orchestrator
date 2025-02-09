@@ -420,6 +420,15 @@
   }
 }
 
+@keyframes spin-fast {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @layer utilities {
   .gadget-desktop {
     @apply w-full bg-schemes-dark-surface-container-low rounded-3xl shadow-lg shadow-schemes-dark-medium-contrast-surface-container-lowest;
@@ -435,6 +444,14 @@
 
   .singlecol-padding {
     @apply px-9 pb-9;
+  }
+
+  .animate-spin-fast {
+    animation: spin-fast 0.5s linear infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin-fast 3s linear infinite;
   }
 
   ::-webkit-scrollbar {
