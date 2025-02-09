@@ -3,8 +3,8 @@ import React from "react";
 import Image from "next/image";
 
 /**
- * Login page component that displays the login form.
- * @returns A React element containing the login page.
+ * Register page component that displays the register form.
+ * @returns A React element containing the register page.
  */
 export default function Dashboard() {
   return (
@@ -36,7 +36,7 @@ export default function Dashboard() {
             type="submit"
             className="cursor-pointer flex items-center justify-center h-12 w-full bg-schemes-dark-medium-contrast-inverse-primary shadow-md hover:shadow-sm shadow-schemes-dark-surface-container-lowest rounded-xl text-schemes-dark-on-background font-sans font-medium text-lg transition-all"
           >
-            Login
+            Register
           </button>
         </form>
       </div>
