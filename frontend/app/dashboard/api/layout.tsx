@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  * APILayout component that provides the layout for the API pages.
  * @param children - The child components to render inside the layout.
