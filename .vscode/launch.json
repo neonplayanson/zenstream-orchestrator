@@ -21,12 +21,15 @@
     },
     {
       "name": "Debug Orchestrator: Frontend",
-      "type": "chrome",
+      "type": "node-terminal",
       "request": "launch",
-      "url": "http://localhost:3000/",
-      "webRoot": "${workspaceFolder}/frontend",
-      "sourceMaps": true,
-      "skipFiles": ["<node_internals>/**", "chrome-error://chromewebdata/**"]
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}/frontend",
+      "serverReadyAction": {
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "openExternally"
+      }
     }
   ],
   "compounds": [
