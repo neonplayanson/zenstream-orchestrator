@@ -32,12 +32,11 @@ export default function Dashboard() {
             className="appearance-none focus:outline-none bg-schemes-dark-surface-dim shadow-inner shadow-schemes-dark-surface-container-lowest rounded-xl text-schemes-dark-on-background bg-opacity-0 font-sans font-medium text-md whitespace-nowrap h-12 w-full pl-4"
             required
           />
-          <button
+          <input
             type="submit"
+            value="Register"
             className="cursor-pointer flex items-center justify-center h-12 w-full bg-schemes-dark-medium-contrast-inverse-primary shadow-md hover:shadow-sm shadow-schemes-dark-surface-container-lowest rounded-xl text-schemes-dark-on-background font-sans font-medium text-lg transition-all"
-          >
-            Register
-          </button>
+          />
         </form>
       </div>
     </div>
