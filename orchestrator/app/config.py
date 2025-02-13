@@ -60,6 +60,7 @@ class Config:
 
         self.database.connect()
         self.database.create_tables()
+        self.database.execute("INSERT OR IGNORE INTO users VALUES ('admin', 'admin', '{}')")
 
     @property
     def database(self):
