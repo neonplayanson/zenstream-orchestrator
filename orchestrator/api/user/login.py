@@ -26,6 +26,15 @@ class UserLogin(Resource):
             "reason": fields.String(description="The reason for the failure"),
         },
     )
+    error_model = api_namespace_user.model(
+        "Error",
+        {
+            "successful": fields.Boolean(
+                default=False, description="Is login successful"
+            ),
+            "reason": fields.String(description="The reason for the failure"),
+        },
+    )
 
     get_parser = reqparse.RequestParser()
     get_parser.add_argument("Username", type=str, help="The username.", location="args")
@@ -37,6 +46,9 @@ class UserLogin(Resource):
     )
     @api_namespace_user.marshal_with(
         fail_model, description="Failed to login the user.", code=406
+    )
+    @api_namespace_user.marshal_with(
+        error_model, description="An error occurred while logging in.", code=500
     )
     def post(self):
         """Login the user."""
@@ -52,6 +64,6 @@ class UserLogin(Resource):
             return {"successful": True, "reason": None}, 201
         else:
             if type(check) is list:
-                return {"successful": False, "reason": "Invalid credentials"}, 406
+                return {"successful": False, "reason": "Invalid credentials"}, 403
             else:
-                return {"successful": False, "reason": "Unknown error."}, 406
+                return {"successful": False, "reason": "Unknown error."}, 500

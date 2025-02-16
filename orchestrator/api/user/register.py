@@ -30,6 +30,15 @@ class UserRegister(Resource):
             "reason": fields.String(description="The reason for the failure"),
         },
     )
+    error_model = api_namespace_user.model(
+        "Error",
+        {
+            "successful": fields.Boolean(
+                default=False, description="Is registration successful"
+            ),
+            "reason": fields.String(description="The reason for the failure"),
+        },
+    )
 
     get_parser = reqparse.RequestParser()
     get_parser.add_argument("Username", type=str, help="The username.", location="args")
@@ -41,6 +50,9 @@ class UserRegister(Resource):
     )
     @api_namespace_user.marshal_with(
         fail_model, description="Failed to register the user.", code=406
+    )
+    @api_namespace_user.marshal_with(
+        error_model, description="An error occurred while registering.", code=500
     )
     def post(self):
         """
@@ -60,6 +72,6 @@ class UserRegister(Resource):
                 return {
                     "successful": False,
                     "reason": "Username is already taken.",
-                }, 406
+                }, 409
             else:
-                return {"successful": False, "reason": "Unknown error."}, 406
+                return {"successful": False, "reason": "Unknown error."}, 500
