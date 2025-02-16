@@ -62,8 +62,6 @@ class UserLogin(Resource):
         )
         if bool(check):
             return {"successful": True, "reason": None}, 201
-        else:
-            if type(check) is list:
-                return {"successful": False, "reason": "Invalid credentials"}, 403
-            else:
-                return {"successful": False, "reason": "Unknown error."}, 500
+        if type(check) is list:
+            return {"successful": False, "reason": "Invalid credentials"}, 403
+        return {"successful": False, "reason": "Unknown error."}, 500
