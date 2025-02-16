@@ -3,6 +3,7 @@ from flask_restx import Resource, fields, reqparse
 from app.config import Config
 from hashlib import sha256
 
+
 @api_namespace_user.route("user/login")
 class UserLogin(Resource):
     success_model = api_namespace_user.model(
@@ -50,4 +51,7 @@ class UserLogin(Resource):
         if bool(check):
             return {"successful": True, "reason": None}, 201
         else:
-            return {"successful": False, "reason": "Invalid credentials"}, 406
+            if type(check) is list:
+                return {"successful": False, "reason": "Invalid credentials"}, 406
+            else:
+                return {"successful": False, "reason": "Unknown error."}, 406
