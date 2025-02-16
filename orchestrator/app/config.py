@@ -7,6 +7,7 @@ from .database import DatabaseHandler
 import os
 from hashlib import sha256
 
+
 class Config:
     _instance = None
 
@@ -60,7 +61,10 @@ class Config:
 
         self.database.connect()
         self.database.create_tables()
-        self.database.execute("INSERT OR IGNORE INTO users VALUES ('admin', ?, '{}')", (sha256("admin".encode()).hexdigest(),))
+        self.database.execute(
+            "INSERT OR IGNORE INTO users VALUES ('admin', ?, '{}')",
+            (sha256("admin".encode()).hexdigest(),),
+        )
 
     @property
     def database(self):
