@@ -67,11 +67,9 @@ class UserRegister(Resource):
         )
         if type(attempt) is list:
             return {"successful": True, "reason": None}, 201
-        else:
-            if attempt.sqlite_errorname == "SQLITE_CONSTRAINT_UNIQUE":
-                return {
-                    "successful": False,
-                    "reason": "Username is already taken.",
-                }, 409
-            else:
-                return {"successful": False, "reason": "Unknown error."}, 500
+        if attempt.sqlite_errorname == "SQLITE_CONSTRAINT_UNIQUE":
+            return {
+                "successful": False,
+                "reason": "Username is already taken.",
+            }, 409
+        return {"successful": False, "reason": "Unknown error."}, 500
