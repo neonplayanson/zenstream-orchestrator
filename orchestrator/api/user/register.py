@@ -6,9 +6,7 @@ from hashlib import sha256
 
 @api_namespace_user.route("user/register")
 class UserRegister(Resource):
-    """
-    Resource class for user registration.
-    """
+    """Resource class for user registration."""
 
     success_model = api_namespace_user.model(
         "Success",
@@ -55,9 +53,7 @@ class UserRegister(Resource):
         error_model, description="An error occurred while registering.", code=500
     )
     def post(self):
-        """
-        Register the user.
-        """
+        """Register the user."""
         args = self.get_parser.parse_args()
         username = args.get("Username").strip()
         password = sha256(args.get("Password").strip().encode()).hexdigest()
