@@ -4,16 +4,44 @@
 ### ======================================================================
 
 from functools import wraps
+from app.config import Config
+from flask import request
+
 
 def authenticate(func):
-    """Authenticate decorator"""
+    """
+    Authenticate decorator to ensure that the user is authenticated before
+    executing the decorated function.
+
+    Args:
+        func (function): The function to be decorated.
+
+    Returns:
+        function: The wrapped function with authentication check.
+    """
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        """Wrapper"""
-        #todo: Implement authentication logic
-        user_authenticated = True
-        if not user_authenticated:
+        """
+        Wrapper function to check user authentication.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            function: The original function if the user is authenticated.
+            dict: A message indicating the user is not authenticated with a 401 status code.
+        """
+        token = request.headers.get("Token")
+        user = request.headers.get("Username")
+
+        db = Config()._database
+        check = db.execute(
+            "SELECT * FROM users WHERE username = ? AND client_tokens LIKE ?",
+            (user, f"%{token}%"),
+        )
+        if not bool(check):
             return {"message": "User is not authenticated to this action"}, 401
         return func(*args, **kwargs)
 
