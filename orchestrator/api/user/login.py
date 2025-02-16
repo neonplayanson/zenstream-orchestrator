@@ -1,8 +1,7 @@
 from . import api_namespace_user
 from flask_restx import Resource, fields, reqparse
 from app.config import Config
-from enum import Enum
-
+from hashlib import sha256
 
 @api_namespace_user.route("user/login")
 class UserLogin(Resource):
@@ -41,8 +40,9 @@ class UserLogin(Resource):
     def post(self):
         """Login the user."""
         args = self.get_parser.parse_args()
-        username = args.get("Username")
-        password = args.get("Password")
+        username = args.get("Username").strip()
+        password = sha256(args.get("Password").strip().encode()).hexdigest()
+        print(password)
         db = Config()._database
         # todo: password hashing
         check = db.execute(

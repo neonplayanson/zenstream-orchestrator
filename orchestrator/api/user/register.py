@@ -1,6 +1,7 @@
 from . import api_namespace_user
 from flask_restx import Resource, fields, reqparse
 from app.config import Config
+from hashlib import sha256
 
 
 @api_namespace_user.route("user/register")
@@ -44,17 +45,10 @@ class UserRegister(Resource):
     def post(self):
         """
         Register the user.
-
-        Parses the request arguments to get the username and password,
-        and attempts to insert a new user into the database.
-
-        Returns:
-            dict: A dictionary containing the registration status and reason.
-            int: The HTTP status code.
         """
         args = self.get_parser.parse_args()
-        username = args.get("Username")
-        password = args.get("Password")
+        username = args.get("Username").strip()
+        password = sha256(args.get("Password").strip().encode()).hexdigest()
         db = Config()._database
         attempt = db.execute(
             "INSERT INTO users VALUES (?, ?, '{}')", (username, password)
