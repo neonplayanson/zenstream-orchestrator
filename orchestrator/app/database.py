@@ -103,7 +103,7 @@ class DatabaseHandler:
             return cursor.fetchall()
         except sqlite3.Error as e:
             print(f"Database error: {e}")
-            return None
+            return e
         finally:
             cursor.close()
 
@@ -114,7 +114,7 @@ class DatabaseHandler:
             return cursor.fetchall() if cursor else None
         except sqlite3.Error as e:
             print(f"Database error: {e}")
-            return None
+            return e
         finally:
             cursor.close()
 
