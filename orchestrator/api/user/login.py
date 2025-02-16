@@ -42,9 +42,7 @@ class UserLogin(Resource):
         args = self.get_parser.parse_args()
         username = args.get("Username").strip()
         password = sha256(args.get("Password").strip().encode()).hexdigest()
-        print(password)
         db = Config()._database
-        # todo: password hashing
         check = db.execute(
             "SELECT * FROM users WHERE username = ? AND password = ?",
             (username, password),
