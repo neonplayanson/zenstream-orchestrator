@@ -8,7 +8,8 @@ from string import ascii_letters, digits
 
 
 class Token:
-    def generate_token(self):
+    @staticmethod
+    def generate_token():
         """Generate a new token."""
         # todo: Implement token generation logic
         return "".join(choice(ascii_letters + digits) for _ in range(32))
