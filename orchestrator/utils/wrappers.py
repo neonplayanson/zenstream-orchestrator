@@ -33,7 +33,7 @@ def authenticate(func):
             function: The original function if the user is authenticated.
             dict: A message indicating the user is not authenticated with a 401 status code.
         """
-        token = request.headers.get("Token")
+        token = request.headers.get("TOKEN")
         user = request.headers.get("Username")
 
         db = Config()._database
