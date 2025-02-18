@@ -5,9 +5,16 @@ from app.config import Config
 from hashlib import sha256
 from app.modules.token import Token
 
-
 @api_namespace_user.route("user/login")
 class UserLogin(Resource):
+    response_model = api_namespace_user.model(
+        "Response",
+        {
+            "successful": fields.Boolean(description="Is login successful"),
+            "reason": fields.String(description="The reason for the failure"),
+        },
+    )
+
     get_parser = reqparse.RequestParser()
     get_parser.add_argument(
         "Username", type=str, help="The username.", location="headers"
@@ -17,9 +24,9 @@ class UserLogin(Resource):
     )
 
     @api_namespace_user.doc(parser=get_parser)
-    @api_namespace_user.marshal_with({}, description="Login the user.", code=201)
-    @api_namespace_user.marshal_with({}, description="Failed to login the user.", code=403)
-    @api_namespace_user.marshal_with({}, description="An error occurred while logging in.", code=500)
+    @api_namespace_user.response(201, "Login the user.")
+    @api_namespace_user.response(403, "Failed to login the user.")
+    @api_namespace_user.response(500, "An error occurred while logging in.")
     def post(self):
         """Login the user."""
         args = self.get_parser.parse_args()
@@ -30,7 +37,7 @@ class UserLogin(Resource):
             "SELECT * FROM users WHERE username = ? AND password = ?",
             (username, password),
         )
-        if bool(check):
+        if check:
             response = make_response({}, 201)
             response.headers["TOKEN"] = Token.generate_token()
             return response
