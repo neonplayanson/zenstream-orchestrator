@@ -64,7 +64,7 @@ class Orchestrator:
         """Serve the Orchestrator."""
         if os.getenv("DEBUG"):
             self.logger.info("Serving Orchestrator in debug mode...")
-            self.app.run(debug=True, host="127.0.0.1", port=3000, use_reloader=False)
+            self.app.run(debug=True, host="127.0.0.1", port=5090, use_reloader=False)
         else:
             self.logger.info("Serving Orchestrator...")
-            serve(self.app, host="127.0.0.1", port=3000)
+            serve(self.app, host="127.0.0.1", port=5090)
