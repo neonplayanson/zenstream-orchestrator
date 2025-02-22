@@ -4,6 +4,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
+/**
+ * Handles the login form submission.
+ * @param {React.FormEvent<HTMLFormElement>} event - The form submission event.
+ * @param {string} user - The username entered by the user.
+ * @param {string} password - The password entered by the user.
+ * @param {AppRouterInstance} router - The Next.js router instance.
+ */
 const handleClick = async (
   event: React.FormEvent<HTMLFormElement>,
   user: string,
@@ -13,7 +20,7 @@ const handleClick = async (
   event.preventDefault();
 
   const response = await fetch("http://127.0.0.1:5090/api/user/login", {
-    method: "GET",
+    method: "POST",
     credentials: "include",
     headers: {
       Username: user,
@@ -34,7 +41,7 @@ const handleClick = async (
 
 /**
  * Login page component that displays the login form.
- * @returns A React element containing the login page.
+ * @returns {JSX.Element} A React element containing the login page.
  */
 export default function Dashboard() {
   const [username, setUsername] = useState("");
