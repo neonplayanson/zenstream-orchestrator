@@ -1,13 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 const handleClick = async (
   event: React.FormEvent<HTMLFormElement>,
   user: string,
   password: string,
+  inviteId: string,
   router: AppRouterInstance
 ) => {
   event.preventDefault();
@@ -21,14 +22,25 @@ const handleClick = async (
     },
   });
 
-  const token = response.headers.get("TOKEN");
-
-  if (response.status === 202 && token) {
+  if (response.status === 201) {
     document.cookie = `Username=${user}; path=/; SameSite=Lax`;
-    document.cookie = `TOKEN=${token}; path=/; SameSite=Lax`;
-    router.push("/auth/login");
+    const deletion = await fetch(
+      "http://127.0.0.1:5090/api/user/delete_invite",
+      {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          url: inviteId,
+        },
+      }
+    );
+    if (deletion.status === 200) {
+      router.push("/auth/login");
+    } else {
+      alert("An error occurred, please try again later.");
+    }
   } else {
-    alert("Invalid credentials");
+    alert("An error occurred, please try again later.");
   }
 };
 
@@ -40,14 +52,15 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-
+  const curpath = usePathname();
+  const inviteId = curpath.split("/").pop() || "";
   return (
     <div className="flex w-full h-screen bg-linear-to-br from-schemes-dark-surface-container-lowest to-schemes-dark-medium-contrast-inverse-primary items-center justify-center">
       <div className="h-[292px] w-[388px] bg-clip-border bg-schemes-dark-surface-container-low rounded-xl flex flex-col items-center justify-center overflow-hidden relative shadow-md shadow-schemes-dark-surface-container-lowest">
         <div className="flex h-[600px] w-96 bg-conic rounded-xl from-transparent to-schemes-dark-on-background from-85% items-center justify-center absolute animate-spin-slow" />
         <form
           className="flex flex-col items-center justify-start h-auto w-96 bg-schemes-dark-surface-container-low rounded-xl relative gap-4 p-6"
-          onSubmit={(e) => handleClick(e, username, password, router)}
+          onSubmit={(e) => handleClick(e, username, password, inviteId, router)}
         >
           <Image
             src="/icons/icon.png"
