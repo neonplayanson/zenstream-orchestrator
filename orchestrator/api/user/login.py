@@ -7,6 +7,7 @@ from app.modules.token import Token
 from datetime import datetime, timedelta
 import json
 
+
 @api_namespace_user.route("user/login")
 class UserLogin(Resource):
     response_model = api_namespace_user.model(
@@ -37,17 +38,17 @@ class UserLogin(Resource):
         db = Config()._database
 
         data = db.execute(
-                "SELECT client_tokens FROM users WHERE username = ?",
-                (username,),
-            )
+            "SELECT client_tokens FROM users WHERE username = ?",
+            (username,),
+        )
         data = json.loads(data[0][0])
         for key in data:
-                if datetime.strptime(key, "%Y-%m-%d %H:%M:%S.%f") < datetime.now():
-                    del data[key]
+            if datetime.strptime(key, "%Y-%m-%d %H:%M:%S.%f") < datetime.now():
+                del data[key]
         db.execute(
-                "UPDATE users SET client_tokens = ? WHERE username = ?",
-                (json.dumps(data), username),
-            )
+            "UPDATE users SET client_tokens = ? WHERE username = ?",
+            (json.dumps(data), username),
+        )
 
         check = db.execute(
             "SELECT * FROM users WHERE username = ? AND password = ?",

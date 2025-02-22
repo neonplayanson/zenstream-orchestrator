@@ -3,6 +3,7 @@ from flask_restx import Resource, fields, reqparse
 from app.config import Config
 from hashlib import sha256
 
+
 @api_namespace_user.route("user/register")
 class UserRegister(Resource):
     """
@@ -26,9 +27,7 @@ class UserRegister(Resource):
         password = sha256(args.get("Password").strip().encode()).hexdigest()
         db = Config()._database
         try:
-            db.execute(
-                "INSERT INTO users VALUES (?, ?, '{}')", (username, password)
-            )
+            db.execute("INSERT INTO users VALUES (?, ?, '{}')", (username, password))
             return {}, 201
         except Exception as e:
             if "UNIQUE constraint failed" in str(e):

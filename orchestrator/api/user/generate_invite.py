@@ -22,5 +22,3 @@ class UserGenerateInvite(Resource):
         if type(exec) == list:
             return {}, 201
         return {}, 500
-
-#todo: not found page + redirects to not found page
