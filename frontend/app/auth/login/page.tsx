@@ -13,7 +13,7 @@ const handleClick = async (
   event.preventDefault();
 
   const response = await fetch("http://127.0.0.1:5090/api/user/login", {
-    method: "POST",
+    method: "GET",
     credentials: "include",
     headers: {
       Username: user,
@@ -24,8 +24,8 @@ const handleClick = async (
   const token = response.headers.get("TOKEN");
 
   if (response.status === 202 && token) {
-    document.cookie = `Username=${user}; path=/; SameSite=Lax`;
-    document.cookie = `TOKEN=${token}; path=/; SameSite=Lax`;
+    document.cookie = `Username=${user}; path=/;`;
+    document.cookie = `TOKEN=${token}; path=/;`;
     router.push("/dashboard");
   } else {
     alert("Invalid credentials");
@@ -36,7 +36,7 @@ const handleClick = async (
  * Login page component that displays the login form.
  * @returns A React element containing the login page.
  */
-export default function Login() {
+export default function Dashboard() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();

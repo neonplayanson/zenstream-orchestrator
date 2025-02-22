@@ -1,6 +1,14 @@
+/**
+ * NotFound component renders a 404 error page.
+ * It displays a message indicating that the requested page was not found.
+ */
 "use client";
 import React from "react";
 
+/**
+ * NotFound functional component.
+ * @returns {JSX.Element} A JSX element representing the 404 error page.
+ */
 export default function NotFound() {
   return (
     <div className="flex w-full h-screen bg-linear-to-br from-schemes-dark-surface-container-lowest to-schemes-dark-medium-contrast-inverse-primary items-center justify-center">

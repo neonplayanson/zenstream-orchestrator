@@ -69,6 +69,13 @@ function Tab({ icon, path }: TabParams) {
   );
 }
 
+/**
+ * Handles the click event for the logout button.
+ * Clears the authentication cookies and redirects to the login page.
+ *
+ * @param event - The mouse event triggered by clicking the button.
+ * @param router - The Next.js router instance for navigation.
+ */
 const handleClick = async (
   event: React.MouseEvent<HTMLAnchorElement>,
   router: AppRouterInstance

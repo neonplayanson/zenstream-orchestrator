@@ -4,6 +4,21 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
+/**
+ * Handles the register form submission.
+ *
+ * @param event - The form submission event
+ * @param user - The username entered by the user
+ * @param password - The password entered by the user
+ * @param router - The Next.js router instance for navigation
+ *
+ * This function:
+ * 1. Prevents default form submission
+ * 2. Sends registration credentials to the backend
+ * 3. Handles the authentication token response
+ * 4. Sets authentication cookies on success
+ * 5. Redirects to login or shows error
+ */
 const handleClick = async (
   event: React.FormEvent<HTMLFormElement>,
   user: string,
