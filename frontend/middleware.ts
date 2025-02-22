@@ -27,12 +27,14 @@ export async function middleware(req: NextRequest) {
       );
 
       if (response.status === 202) {
+        console.log("Authenticated");
         return NextResponse.next();
       } else {
+        console.log("Invalid credentials");
         return NextResponse.redirect(new URL("/auth/login", req.url));
       }
     }
-  } else {
+  } else if (destination.startsWith("/auth/register/")) {
     const path_components = destination.split("/");
     const invite_id = path_components[path_components.length - 1];
 
@@ -56,5 +58,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/auth/register/:path*"],
+  matcher: ["/dashboard", "/auth/register/:path*"],
 };

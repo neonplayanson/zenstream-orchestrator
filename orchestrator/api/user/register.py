@@ -11,8 +11,9 @@ class UserRegister(Resource):
     """
 
     get_parser = reqparse.RequestParser()
-    get_parser.add_argument("Username", type=str, help="The username.", location="args")
-    get_parser.add_argument("Password", type=str, help="The password.", location="args")
+    get_parser.add_argument("Username", type=str, help="The username.", location="headers")
+    get_parser.add_argument("Password", type=str, help="The password.", location="headers")
+    get_parser.add_argument("url", type=str, help="The url.", location="headers")
 
     @api_namespace_user.doc(parser=get_parser)
     @api_namespace_user.response(201, "Registered the user.")
@@ -25,6 +26,7 @@ class UserRegister(Resource):
         args = self.get_parser.parse_args()
         username = args.get("Username").strip()
         password = sha256(args.get("Password").strip().encode()).hexdigest()
+        print(args.get("url"))
         db = Config()._database
         try:
             db.execute("INSERT INTO users VALUES (?, ?, '{}')", (username, password))
