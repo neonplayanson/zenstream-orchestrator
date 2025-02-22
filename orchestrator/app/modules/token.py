@@ -12,7 +12,7 @@ class Token:
     def generate_token():
         """Generate a new token."""
         # todo: Implement token generation logic
-        return "".join(choice(ascii_letters + digits) for _ in range(32))
+        return "".join(choice(ascii_letters + digits) for _ in range(64))
 
 
 if __name__ == "__main__":
