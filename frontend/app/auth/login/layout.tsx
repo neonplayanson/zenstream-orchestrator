@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 };
 
 /**
- * DashboardLayout component that provides the layout for the login pages.
+ * LoginLayout component that provides the layout for the login pages.
  * @param children - The child components to render inside the layout.
  * @returns A React element containing the login layout.
  */
-export default function DashboardLayout({
+export default function LoginLayout({
   children,
 }: {
   children: React.ReactNode;

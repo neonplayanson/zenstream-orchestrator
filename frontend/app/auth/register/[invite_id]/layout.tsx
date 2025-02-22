@@ -4,18 +4,18 @@ import Head from "next/head";
 import type { Metadata } from "next";
 
 /**
- * Metadata for the not found layout.
+ * Metadata for the register layout.
  */
 export const metadata: Metadata = {
-  title: "ZenStream | Not Found",
+  title: "ZenStream | Register",
 };
 
 /**
- * NotFoundLayout component that provides the layout for the not found pages.
+ * RegisterLayout component that provides the layout for the register pages.
  * @param children - The child components to render inside the layout.
- * @returns A React element containing the not found layout.
+ * @returns A React element containing the register layout.
  */
-export default function NotFoundLayout({
+export default function RegisterLayout({
   children,
 }: {
   children: React.ReactNode;

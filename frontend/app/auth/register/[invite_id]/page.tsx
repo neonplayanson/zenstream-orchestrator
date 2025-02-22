@@ -12,7 +12,7 @@ const handleClick = async (
 ) => {
   event.preventDefault();
 
-  const response = await fetch("http://127.0.0.1:5090/api/user/login", {
+  const response = await fetch("http://127.0.0.1:5090/api/user/register", {
     method: "POST",
     credentials: "include",
     headers: {
@@ -26,17 +26,17 @@ const handleClick = async (
   if (response.status === 202 && token) {
     document.cookie = `Username=${user}; path=/; SameSite=Lax`;
     document.cookie = `TOKEN=${token}; path=/; SameSite=Lax`;
-    router.push("/dashboard");
+    router.push("/auth/login");
   } else {
     alert("Invalid credentials");
   }
 };
 
 /**
- * Login page component that displays the login form.
- * @returns A React element containing the login page.
+ * Register page component that displays the register form.
+ * @returns A React element containing the register page.
  */
-export default function Login() {
+export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -61,7 +61,6 @@ export default function Login() {
             type="text"
             placeholder="Username"
             className="appearance-none focus:outline-none bg-schemes-dark-surface-dim shadow-inner shadow-schemes-dark-surface-container-lowest rounded-xl text-schemes-dark-on-background bg-opacity-0 font-sans font-medium text-md whitespace-nowrap h-12 w-full pl-4"
-            value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
@@ -69,16 +68,14 @@ export default function Login() {
             type="password"
             placeholder="Password"
             className="appearance-none focus:outline-none bg-schemes-dark-surface-dim shadow-inner shadow-schemes-dark-surface-container-lowest rounded-xl text-schemes-dark-on-background bg-opacity-0 font-sans font-medium text-md whitespace-nowrap h-12 w-full pl-4"
-            value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button
+          <input
             type="submit"
+            value="Register"
             className="cursor-pointer flex items-center justify-center h-12 w-full bg-schemes-dark-medium-contrast-inverse-primary shadow-md hover:shadow-sm shadow-schemes-dark-surface-container-lowest rounded-xl text-schemes-dark-on-background font-sans font-medium text-lg transition-all"
-          >
-            Login
-          </button>
+          />
         </form>
       </div>
     </div>
