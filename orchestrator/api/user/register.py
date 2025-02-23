@@ -1,5 +1,5 @@
 from . import api_namespace_user
-from flask_restx import Resource, fields, reqparse
+from flask_restx import Resource, reqparse
 from app.config import Config
 from hashlib import sha256
 
