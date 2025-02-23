@@ -24,7 +24,7 @@ const handleClick = async (
   user: string,
   password: string,
   inviteId: string,
-  router: AppRouterInstance
+  router: AppRouterInstance,
 ) => {
   event.preventDefault();
 
@@ -47,7 +47,7 @@ const handleClick = async (
         headers: {
           url: inviteId,
         },
-      }
+      },
     );
     if (deletion.status === 200) {
       router.push("/auth/login");

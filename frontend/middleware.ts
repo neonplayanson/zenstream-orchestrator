@@ -23,7 +23,7 @@ export async function middleware(req: NextRequest) {
             Username: username,
             TOKEN: token,
           },
-        }
+        },
       );
 
       if (response.status === 202) {
@@ -46,7 +46,7 @@ export async function middleware(req: NextRequest) {
         headers: {
           url: invite_id,
         },
-      }
+      },
     );
 
     if (response.status === 202) {
