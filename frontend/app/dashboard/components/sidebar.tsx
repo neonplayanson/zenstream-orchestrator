@@ -78,7 +78,7 @@ function Tab({ icon, path }: TabParams) {
  */
 const handleClick = async (
   event: React.MouseEvent<HTMLAnchorElement>,
-  router: AppRouterInstance
+  router: AppRouterInstance,
 ) => {
   event.preventDefault();
 

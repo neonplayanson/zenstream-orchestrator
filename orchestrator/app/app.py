@@ -38,7 +38,13 @@ class Orchestrator:
                 r"/api/*": {
                     "origins": ["http://localhost:3000", "http://127.0.0.1:3000"],
                     "supports_credentials": True,
-                    "allow_headers": ["Content-Type", "TOKEN", "Username", "Password", "url"],
+                    "allow_headers": [
+                        "Content-Type",
+                        "TOKEN",
+                        "Username",
+                        "Password",
+                        "url",
+                    ],
                     "expose_headers": ["TOKEN"],
                 }
             },
