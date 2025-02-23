@@ -19,6 +19,6 @@ class UserDeleteInvite(Resource):
         url = args.get("url").strip()
         exec = db.execute("DELETE FROM invites WHERE url = ?", (url,))
 
-        if type(exec) == list:
+        if type(exec) is list:
             return {}, 200
         return {}, 500
