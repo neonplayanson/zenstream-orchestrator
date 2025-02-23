@@ -11,8 +11,12 @@ class UserRegister(Resource):
     """
 
     get_parser = reqparse.RequestParser()
-    get_parser.add_argument("Username", type=str, help="The username.", location="headers")
-    get_parser.add_argument("Password", type=str, help="The password.", location="headers")
+    get_parser.add_argument(
+        "Username", type=str, help="The username.", location="headers"
+    )
+    get_parser.add_argument(
+        "Password", type=str, help="The password.", location="headers"
+    )
     get_parser.add_argument("url", type=str, help="The url.", location="headers")
 
     @api_namespace_user.doc(parser=get_parser)
@@ -34,5 +38,4 @@ class UserRegister(Resource):
         except Exception as e:
             if "UNIQUE constraint failed" in str(e):
                 return {}, 409
-            else:
-                return {}, 500
+            return {}, 500
