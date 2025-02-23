@@ -34,5 +34,4 @@ class UserRegister(Resource):
         except Exception as e:
             if "UNIQUE constraint failed" in str(e):
                 return {}, 409
-            else:
-                return {}, 500
+            return {}, 500
