@@ -1,10 +1,6 @@
 from . import api_namespace_user
-from flask_restx import Resource, fields, reqparse
-from flask import make_response
+from flask_restx import Resource, reqparse
 from app.config import Config
-from hashlib import sha256
-from app.modules.token import Token
-from datetime import datetime, timedelta
 import json
 
 
