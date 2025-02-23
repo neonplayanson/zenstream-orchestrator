@@ -6,66 +6,33 @@ from hashlib import sha256
 
 @api_namespace_user.route("user/register")
 class UserRegister(Resource):
-    """Resource class for user registration."""
-
-    success_model = api_namespace_user.model(
-        "Success",
-        {
-            "successful": fields.Boolean(
-                default=True, description="Is registration successful"
-            ),
-            "reason": fields.String(
-                default=None, description="Null if registration is successful"
-            ),
-        },
-    )
-    fail_model = api_namespace_user.model(
-        "Fail",
-        {
-            "successful": fields.Boolean(
-                default=False, description="Is registration successful"
-            ),
-            "reason": fields.String(description="The reason for the failure"),
-        },
-    )
-    error_model = api_namespace_user.model(
-        "Error",
-        {
-            "successful": fields.Boolean(
-                default=False, description="Is registration successful"
-            ),
-            "reason": fields.String(description="The reason for the failure"),
-        },
-    )
+    """
+    Resource class for user registration.
+    """
 
     get_parser = reqparse.RequestParser()
-    get_parser.add_argument("Username", type=str, help="The username.", location="args")
-    get_parser.add_argument("Password", type=str, help="The password.", location="args")
+    get_parser.add_argument("Username", type=str, help="The username.", location="headers")
+    get_parser.add_argument("Password", type=str, help="The password.", location="headers")
+    get_parser.add_argument("url", type=str, help="The url.", location="headers")
 
     @api_namespace_user.doc(parser=get_parser)
-    @api_namespace_user.marshal_with(
-        success_model, description="Registered the user.", code=201
-    )
-    @api_namespace_user.marshal_with(
-        fail_model, description="Failed to register the user.", code=406
-    )
-    @api_namespace_user.marshal_with(
-        error_model, description="An error occurred while registering.", code=500
-    )
+    @api_namespace_user.response(201, "Registered the user.")
+    @api_namespace_user.response(409, "Failed to register the user.")
+    @api_namespace_user.response(500, "An error occurred while registering.")
     def post(self):
-        """Register the user."""
+        """
+        Register the user.
+        """
         args = self.get_parser.parse_args()
         username = args.get("Username").strip()
         password = sha256(args.get("Password").strip().encode()).hexdigest()
+        print(args.get("url"))
         db = Config()._database
-        attempt = db.execute(
-            "INSERT INTO users VALUES (?, ?, '{}')", (username, password)
-        )
-        if type(attempt) is list:
-            return {"successful": True, "reason": None}, 201
-        if attempt.sqlite_errorname == "SQLITE_CONSTRAINT_UNIQUE":
-            return {
-                "successful": False,
-                "reason": "Username is already taken.",
-            }, 409
-        return {"successful": False, "reason": "Unknown error."}, 500
+        try:
+            db.execute("INSERT INTO users VALUES (?, ?, '{}')", (username, password))
+            return {}, 201
+        except Exception as e:
+            if "UNIQUE constraint failed" in str(e):
+                return {}, 409
+            else:
+                return {}, 500

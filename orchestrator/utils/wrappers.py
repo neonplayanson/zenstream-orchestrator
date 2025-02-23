@@ -33,8 +33,11 @@ def authenticate(func):
             function: The original function if the user is authenticated.
             dict: A message indicating the user is not authenticated with a 401 status code.
         """
-        token = request.headers.get("Token")
-        user = request.headers.get("Username")
+        try:
+            token = request.headers.get("TOKEN")
+            user = request.headers.get("Username")
+        except Exception as e:
+            return {"message": "Username or Token not found"}, 401
 
         db = Config()._database
         check = db.execute(
@@ -42,7 +45,7 @@ def authenticate(func):
             (user, f"%{token}%"),
         )
         if not bool(check):
-            return {"message": "User is not authenticated to this action"}, 401
+            return {"message": "User is not authenticated to this action"}, 403
         return func(*args, **kwargs)
 
     return wrapper

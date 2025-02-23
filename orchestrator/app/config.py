@@ -54,7 +54,14 @@ class Config:
                             "client_tokens": "JSON NOT NULL",
                         },
                     },
-                }
+                    "invites": {
+                        "create": """
+                        CREATE TABLE IF NOT EXISTS invites (
+                            url TEXT UNIQUE NOT NULL
+                            )""",
+                        "columns": {"url": "TEXT UNIQUE NOT NULL"},
+                    },
+                },
             },
             db_file=os.path.join(os.getcwd(), "sqlite/orchestrator.db"),
         )

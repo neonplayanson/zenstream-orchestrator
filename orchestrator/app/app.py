@@ -10,6 +10,7 @@ from flask import Blueprint, Flask
 from flask_restx import Api
 from logger import Logger
 from .config import load_config
+from flask_cors import CORS
 
 from api import api_namespaces
 
@@ -31,6 +32,17 @@ class Orchestrator:
         """Create the Orchestrator."""
         self.logger.info("Creating Orchestrator...")
         self.app = Flask(__name__)
+        CORS(
+            self.app,
+            resources={
+                r"/api/*": {
+                    "origins": ["http://localhost:3000", "http://127.0.0.1:3000"],
+                    "supports_credentials": True,
+                    "allow_headers": ["Content-Type", "TOKEN", "Username", "Password", "url"],
+                    "expose_headers": ["TOKEN"],
+                }
+            },
+        )
 
         if os.getenv("SECRET_KEY") is None:
             raise Exception("Environment variable `SECRET_KEY` not set")

@@ -11,10 +11,4 @@ class Token:
     @staticmethod
     def generate_token():
         """Generate a new token."""
-        # todo: Implement token generation logic
-        return "".join(choice(ascii_letters + digits) for _ in range(32))
-
-
-if __name__ == "__main__":
-    token = Token()
-    print(token.generate_token())
+        return "".join(choice(ascii_letters + digits) for _ in range(64))
