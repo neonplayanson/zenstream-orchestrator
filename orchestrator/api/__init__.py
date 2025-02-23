@@ -6,9 +6,11 @@
 import os
 import importlib
 from .user import api_namespace_user
+from .zenstream import api_namespace_zs
 
 api_namespaces = [
     api_namespace_user,
+    api_namespace_zs,
 ]
 
 endpoints = os.path.join(os.path.dirname(__file__))
