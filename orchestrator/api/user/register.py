@@ -9,8 +9,12 @@ class UserRegister(Resource):
     """Resource class for user registration."""
 
     get_parser = reqparse.RequestParser()
-    get_parser.add_argument("Username", type=str, help="The username.", location="headers")
-    get_parser.add_argument("Password", type=str, help="The password.", location="headers")
+    get_parser.add_argument(
+        "Username", type=str, help="The username.", location="headers"
+    )
+    get_parser.add_argument(
+        "Password", type=str, help="The password.", location="headers"
+    )
     get_parser.add_argument("url", type=str, help="The url.", location="headers")
 
     @api_namespace_user.doc(parser=get_parser)
