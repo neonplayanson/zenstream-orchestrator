@@ -39,13 +39,13 @@ class UserLogin(Resource):
 
         try:
             data = db.execute(
-            "SELECT client_tokens FROM users WHERE username = ?",
-            (username,),
+                "SELECT client_tokens FROM users WHERE username = ?",
+                (username,),
             )
             data = json.loads(data[0][0])
         except Exception as e:
             return {}, 403
-    
+
         for key in data:
             if datetime.strptime(key, "%Y-%m-%d %H:%M:%S.%f") < datetime.now():
                 del data[key]

@@ -28,8 +28,8 @@ class AuthenticateUser(Resource):
 
         try:
             data = db.execute(
-            "SELECT client_tokens FROM users WHERE username = ?",
-            (username,),
+                "SELECT client_tokens FROM users WHERE username = ?",
+                (username,),
             )
             data = json.loads(data[0][0])
         except Exception as e:

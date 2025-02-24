@@ -5,6 +5,7 @@ from hashlib import sha256
 from flask import request
 from urllib.parse import urlparse
 
+
 @api_namespace_user.route("user/register")
 class UserRegister(Resource):
     """Resource class for user registration."""
@@ -35,7 +36,7 @@ class UserRegister(Resource):
         check = db.execute("SELECT * FROM invites WHERE url = ?", (invite_id,))
         if not check:
             return {}, 403
-        
+
         try:
             db.execute("INSERT INTO users VALUES (?, ?, '{}')", (username, password))
             return {}, 201
