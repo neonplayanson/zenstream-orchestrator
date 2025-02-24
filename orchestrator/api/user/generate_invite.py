@@ -19,6 +19,11 @@ class UserGenerateInvite(Resource):
         url = "".join(choice(ascii_letters + digits) for _ in range(64))
         exec = db.execute("INSERT INTO invites VALUES (?)", (url,))
 
+
         if type(exec) == list:
             return {"url": url}, 201
+
+
+
+
         return {}, 500

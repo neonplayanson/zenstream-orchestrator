@@ -15,7 +15,7 @@ const handleClick = async (
   event: React.FormEvent<HTMLFormElement>,
   user: string,
   password: string,
-  router: AppRouterInstance
+  router: AppRouterInstance,
 ) => {
   event.preventDefault();
 
