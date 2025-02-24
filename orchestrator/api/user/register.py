@@ -40,7 +40,7 @@ class UserRegister(Resource):
         try:
             db.execute("INSERT INTO users VALUES (?, ?, '{}')", (username, password))
             return {}, 201
-        except Exception:
+        except Exception as e:
             if "UNIQUE constraint failed" in str(e):
                 return {}, 409
             return {}, 500
