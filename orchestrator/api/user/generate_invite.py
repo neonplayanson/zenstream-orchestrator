@@ -17,9 +17,9 @@ class UserGenerateInvite(Resource):
         db = Config()._database
 
         url = "".join(choice(ascii_letters + digits) for _ in range(64))
-        exec = db.execute("INSERT INTO invites VALUES (?)", (url,))
+        register = db.execute("INSERT INTO invites VALUES (?)", (url,))
 
-        if type(exec) is list:
+        if type(register) is list:
             return {"url": url}, 201
 
         return {}, 500
