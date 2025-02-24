@@ -23,7 +23,7 @@ class AuthenticateUser(Resource):
         """Authenticate the user."""
         args = self.get_parser.parse_args()
         username = args.get("Username").strip()
-        token = args.get("TOKEN")
+        token = args.get("TOKEN").strip()
         db = Config()._database
 
         try:
@@ -32,7 +32,7 @@ class AuthenticateUser(Resource):
                 (username,),
             )
             data = json.loads(data[0][0])
-        except Exception as e:
+        except Exception:
             return {}, 403
         for key in data:
             if datetime.strptime(key, "%Y-%m-%d %H:%M:%S.%f") < datetime.now():

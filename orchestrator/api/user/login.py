@@ -43,7 +43,7 @@ class UserLogin(Resource):
                 (username,),
             )
             data = json.loads(data[0][0])
-        except Exception as e:
+        except Exception:
             return {}, 403
 
         for key in data:

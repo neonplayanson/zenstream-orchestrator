@@ -36,5 +36,5 @@ class UserLogout(Resource):
                 (json.dumps(data), username),
             )
             return {}, 200
-        except Exception as e:
+        except Exception:
             return {}, 500
