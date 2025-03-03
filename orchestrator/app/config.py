@@ -61,6 +61,22 @@ class Config:
                             )""",
                         "columns": {"url": "TEXT UNIQUE NOT NULL"},
                     },
+                    "settings": {
+                        "create": """
+                        CREATE TABLE IF NOT EXISTS settings (
+                            servername TEXT NOT NULL, 
+                            origin_type INTEGER NOT NULL,
+                            origin_url TEXT NOT NULL,
+                            api_key TEXT NOT NULL
+                        )
+                        """,
+                        "columns": {
+                            "servername": "TEXT NOT NULL",
+                            "origin_type": "INTEGER NOT NULL",
+                            "origin_url": "TEXT NOT NULL",
+                            "api_key": "TEXT NOT NULL",
+                        },
+                    },
                 },
             },
             db_file=os.path.join(os.getcwd(), "sqlite/orchestrator.db"),
