@@ -112,3 +112,18 @@ class User:
             return True
         except Exception:
             return False
+
+    def info(self) -> dict:
+        """Return user info"""
+        try:
+            data = self._db.execute(
+                "SELECT * FROM users WHERE username = ?",
+                (self.username,),
+            )
+            return {
+                "username": data[0][0],
+                "password": data[0][1],
+                "client_tokens": json.loads(data[0][2]),
+            }
+        except Exception:
+            return {}
