@@ -1,7 +1,6 @@
 from . import api_namespace_user
 from flask_restx import Resource, reqparse
-from app.config import Config
-import json
+from app.models.user import User
 
 
 @api_namespace_user.route("user/logout")
@@ -22,19 +21,7 @@ class UserLogout(Resource):
         args = self.get_parser.parse_args()
         username = args.get("Username").strip()
         token = args.get("TOKEN")
-        db = Config()._database
-
-        try:
-            data = db.execute(
-                "SELECT client_tokens FROM users WHERE username = ?",
-                (username,),
-            )
-            data = json.loads(data[0][0])
-            data = {k: v for k, v in data.items() if v != token}
-            db.execute(
-                "UPDATE users SET client_tokens = ? WHERE username = ?",
-                (json.dumps(data), username),
-            )
+        
+        if User(username).logout(token):
             return {}, 200
-        except Exception:
-            return {}, 500
+        return {}, 500

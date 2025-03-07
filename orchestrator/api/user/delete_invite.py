@@ -1,6 +1,6 @@
 from . import api_namespace_user
 from flask_restx import Resource, reqparse
-from app.config import Config
+from app.models import Invite
 
 
 @api_namespace_user.route("user/delete_invite")
@@ -13,12 +13,9 @@ class UserDeleteInvite(Resource):
     @api_namespace_user.response(500, "Failed to delete an invite.")
     def delete(self):
         """Delete an invite."""
-        db = Config()._database
-
         args = self.get_parser.parse_args()
         url = args.get("url").strip()
-        deletion = db.execute("DELETE FROM invites WHERE url = ?", (url,))
 
-        if type(deletion) is list:
+        if Invite().delete(url):
             return {}, 200
         return {}, 500
