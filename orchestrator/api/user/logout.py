@@ -1,6 +1,7 @@
 from . import api_namespace_user
 from flask_restx import Resource, reqparse
 from app.models.user import User
+from utils.wrappers import authenticate
 
 
 @api_namespace_user.route("user/logout")
@@ -11,6 +12,7 @@ class UserLogout(Resource):
     )
     get_parser.add_argument("TOKEN", type=str, help="The token.", location="headers")
 
+    @authenticate
     @api_namespace_user.doc(parser=get_parser)
     @api_namespace_user.response(200, description="User logged out.")
     @api_namespace_user.response(
