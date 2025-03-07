@@ -14,8 +14,13 @@ class UserDeleteInvite(Resource):
     def delete(self):
         """Delete an invite."""
         args = self.get_parser.parse_args()
-        url = args.get("url").strip()
+        inviteid = args.get("url").strip()
 
-        if Invite().delete(url):
+        inv = Invite()
+
+        if not inv.validate(inviteid):
+            return {}, 403
+
+        if inv.delete(inviteid):
             return {}, 200
         return {}, 500
