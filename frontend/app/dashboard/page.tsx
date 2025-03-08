@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FaKey } from "react-icons/fa";
 import { Gadget, Greeting, Codeblock, Button } from "./components/page_util";
 import generateInvite from "./modules/invites";
@@ -17,14 +17,14 @@ export default function Dashboard() {
    * Makes an asynchronous call to generate a unique invite code and
    * updates the invite state with a formatted registration URL.
    */
-  const handleGenerateInvite = async () => {
+  const handleGenerateInvite = useCallback(async () => {
     try {
       const newInvite = await generateInvite.generateInvite();
       setInvite(`http://127.0.0.1:3000/auth/register/${newInvite}`);
     } catch (error) {
       console.error("Error generating invite:", error);
     }
-  };
+  }, []);
 
   return (
     <div className="w-full h-screen bg-schemes-dark-surface-container-lowest items-start justify-start">
