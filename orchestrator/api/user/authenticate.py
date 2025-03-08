@@ -20,8 +20,10 @@ class AuthenticateUser(Resource):
     def post(self):
         """Authenticate the user."""
         args = self.get_parser.parse_args()
-        username = args.get("Username").strip()
-        token = args.get("TOKEN").strip()
+        username = args.get("Username")
+        token = args.get("TOKEN")
+        if type(username) is not str or type(token) is not str:
+            return {}, 403
 
         if User(username).authenticate(token):
             return {}, 202

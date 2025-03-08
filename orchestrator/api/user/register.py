@@ -27,11 +27,13 @@ class UserRegister(Resource):
     def post(self):
         """Register the user."""
         args = self.get_parser.parse_args()
-        username = args.get("Username").strip()
-        password = sha256(args.get("Password").strip().encode()).hexdigest()
+        username = args.get("Username")
+        password = args.get("Password")
+        if type(username) is not str or type(password) is not str:
+            return {}, 403
         invite_id = urlparse(request.headers.get("Referer")).path.split("/")[-2]
 
-        success, invalid = User(username, password).register(invite_id)
+        success, invalid = User(username.strip(), sha256(password.strip().encode()).hexdigest()).register(invite_id)
         if invalid:
             return {}, 403
         if success:

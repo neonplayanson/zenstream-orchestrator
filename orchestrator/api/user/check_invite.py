@@ -15,8 +15,10 @@ class UserCheckInvite(Resource):
     def get(self):
         """Check if an invite is valid."""
         args = self.get_parser.parse_args()
-        inviteid = args.get("url").strip()
-
-        if Invite().validate(inviteid):
+        inviteid = args.get("url")
+        if type(inviteid) is not str:
+            return {"message": "Invalid invite."}, 403
+        
+        if Invite().validate(inviteid.strip()):
             return {}, 202
         return {}, 403
