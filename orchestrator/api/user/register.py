@@ -33,7 +33,9 @@ class UserRegister(Resource):
             return {}, 403
         invite_id = urlparse(request.headers.get("Referer")).path.split("/")[-2]
 
-        success, invalid = User(username.strip(), sha256(password.strip().encode()).hexdigest()).register(invite_id)
+        success, invalid = User(
+            username.strip(), sha256(password.strip().encode()).hexdigest()
+        ).register(invite_id)
         if invalid:
             return {}, 403
         if success:
