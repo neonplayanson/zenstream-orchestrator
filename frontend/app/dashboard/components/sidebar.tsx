@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 type TabParams = {
-  icon: React.ReactElement;
-  path: string;
+	icon: React.ReactElement;
+	path: string;
 };
 
 /**
@@ -27,18 +27,18 @@ type TabParams = {
  * @returns A React element containing the logo image.
  */
 function Logo({ icon }: { icon: string }) {
-  return (
-    <div className="items-center bg-opacity-0 p-3 order-first m-1">
-      <Image
-        src={icon}
-        alt="icon"
-        height={48}
-        width={48}
-        unoptimized
-        priority
-      />
-    </div>
-  );
+	return (
+		<div className="items-center bg-opacity-0 p-3 order-first m-1">
+			<Image
+				src={icon}
+				alt="icon"
+				height={48}
+				width={48}
+				unoptimized
+				priority
+			/>
+		</div>
+	);
 }
 
 /**
@@ -46,7 +46,7 @@ function Logo({ icon }: { icon: string }) {
  * @returns A React element containing the separator.
  */
 function Seperator() {
-  return <div className="w-20 h-6 bg-opacity-0" />;
+	return <div className="w-20 h-6 bg-opacity-0" />;
 }
 
 /**
@@ -56,17 +56,17 @@ function Seperator() {
  * @returns A React element containing the tab.
  */
 function Tab({ icon, path }: TabParams) {
-  return (
-    <div className="flex items-center justify-center relative size-12 hover:size-14 ease-out transition-all duration-150 group">
-      <div className="absolute size-9 blur-none rounded-full group-hover:blur-md group-hover:bg-schemes-dark-on-surface-variant ease-out transition-all duration-150" />
-      <a
-        href={path}
-        className="relative bg-schemes-dark-surface-container-lowest rounded-full size-12 flex items-center justify-center ease-out group-hover:size-14 group-hover:bg-schemes-dark-surface-variant transition-all duration-150"
-      >
-        {icon}
-      </a>
-    </div>
-  );
+	return (
+		<div className="flex items-center justify-center relative size-12 hover:size-14 ease-out transition-all duration-150 group">
+			<div className="absolute size-9 blur-none rounded-full group-hover:blur-md group-hover:bg-schemes-dark-on-surface-variant ease-out transition-all duration-150" />
+			<a
+				href={path}
+				className="relative bg-schemes-dark-surface-container-lowest rounded-full size-12 flex items-center justify-center ease-out group-hover:size-14 group-hover:bg-schemes-dark-surface-variant transition-all duration-150"
+			>
+				{icon}
+			</a>
+		</div>
+	);
 }
 
 /**
@@ -77,37 +77,37 @@ function Tab({ icon, path }: TabParams) {
  * @param router - The Next.js router instance for navigation.
  */
 const handleClick = async (
-  event: React.MouseEvent<HTMLAnchorElement>,
-  router: AppRouterInstance,
+	event: React.MouseEvent<HTMLAnchorElement>,
+	router: AppRouterInstance
 ) => {
-  event.preventDefault();
+	event.preventDefault();
 
-  const getCookie = (name: string) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(";").shift();
-  };
+	const getCookie = (name: string) => {
+		const value = `; ${document.cookie}`;
+		const parts = value.split(`; ${name}=`);
+		if (parts.length === 2) return parts.pop()?.split(";").shift();
+	};
 
-  const user = getCookie("Username");
-  const token = getCookie("TOKEN");
+	const user = getCookie("Username");
+	const token = getCookie("TOKEN");
 
-  if (!user || !token) {
-    router.push("/auth/login");
-    return;
-  }
+	if (!user || !token) {
+		router.push("/auth/login");
+		return;
+	}
 
-  await fetch("http://127.0.0.1:5090/api/user/login", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      Username: user || "",
-      TOKEN: token || "",
-    },
-  });
+	await fetch("http://127.0.0.1:9090/api/user/login", {
+		method: "GET",
+		credentials: "include",
+		headers: {
+			Username: user || "",
+			TOKEN: token || "",
+		},
+	});
 
-  document.cookie = "Username=; path=/; SameSite=Lax";
-  document.cookie = "TOKEN=; path=/; SameSite=Lax";
-  router.push("/auth/login");
+	document.cookie = "Username=; path=/; SameSite=Lax";
+	document.cookie = "TOKEN=; path=/; SameSite=Lax";
+	router.push("/auth/login");
 };
 
 /**
@@ -115,31 +115,31 @@ const handleClick = async (
  * @returns A React element containing the navigation bar.
  */
 export default function Navbar() {
-  const router = useRouter();
+	const router = useRouter();
 
-  return (
-    <div className="fixed flex flex-col bg-schemes-dark-background h-full w-20 items-center justify-start border-r-[1px] border-schemes-dark-surface-container-low">
-      <div className="flex flex-col bg-schemes-dark-background h-full w-20 items-center justify-start border-r-[1px] border-schemes-dark-surface-container-low">
-        <Logo icon="/icons/icon.png" />
-        <Seperator />
-        <div className="flex flex-col items-center justify-center gap-3">
-          <Tab
-            icon={
-              <MdSpaceDashboard className="size-8 text-schemes-dark-on-background" />
-            }
-            path="/dashboard"
-          />
-        </div>
-      </div>
-      <div className="flex items-center justify-center size-12 hover:size-14 ease-out transition-all duration-150 group rotate-180 pt-6 cursor-context-pointer">
-        <div className="absolute size-9 blur-none rounded-full group-hover:blur-md group-hover:bg-schemes-dark-on-surface-variant ease-out transition-all duration-150" />
-        <a
-          onClick={(e) => handleClick(e, router)}
-          className="relative bg-schemes-dark-surface-container-lowest rounded-full size-12 flex items-center justify-center ease-out group-hover:size-14 group-hover:bg-schemes-dark-surface-variant transition-all duration-150"
-        >
-          <IoLogOut className="size-8 text-schemes-dark-on-background" />
-        </a>
-      </div>
-    </div>
-  );
+	return (
+		<div className="fixed flex flex-col bg-schemes-dark-background h-full w-20 items-center justify-start border-r-[1px] border-schemes-dark-surface-container-low">
+			<div className="flex flex-col bg-schemes-dark-background h-full w-20 items-center justify-start border-r-[1px] border-schemes-dark-surface-container-low">
+				<Logo icon="/icons/icon.png" />
+				<Seperator />
+				<div className="flex flex-col items-center justify-center gap-3">
+					<Tab
+						icon={
+							<MdSpaceDashboard className="size-8 text-schemes-dark-on-background" />
+						}
+						path="/dashboard"
+					/>
+				</div>
+			</div>
+			<div className="flex items-center justify-center size-12 hover:size-14 ease-out transition-all duration-150 group rotate-180 pt-6 cursor-context-pointer">
+				<div className="absolute size-9 blur-none rounded-full group-hover:blur-md group-hover:bg-schemes-dark-on-surface-variant ease-out transition-all duration-150" />
+				<a
+					onClick={(e) => handleClick(e, router)}
+					className="relative bg-schemes-dark-surface-container-lowest rounded-full size-12 flex items-center justify-center ease-out group-hover:size-14 group-hover:bg-schemes-dark-surface-variant transition-all duration-150"
+				>
+					<IoLogOut className="size-8 text-schemes-dark-on-background" />
+				</a>
+			</div>
+		</div>
+	);
 }
