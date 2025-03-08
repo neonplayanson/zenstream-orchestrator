@@ -1,63 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-
-/**
- * Handles the register form submission.
- *
- * @param event - The form submission event
- * @param user - The username entered by the user
- * @param password - The password entered by the user
- * @param router - The Next.js router instance for navigation
- *
- * This function:
- * 1. Prevents default form submission
- * 2. Sends registration credentials to the backend
- * 3. Handles the authentication token response
- * 4. Sets authentication cookies on success
- * 5. Redirects to login or shows error
- */
-const handleClick = async (
-  event: React.FormEvent<HTMLFormElement>,
-  user: string,
-  password: string,
-  inviteId: string,
-  router: AppRouterInstance,
-) => {
-  event.preventDefault();
-
-  const response = await fetch("http://127.0.0.1:5090/api/user/register", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      Username: user,
-      Password: password,
-    },
-  });
-
-  if (response.status === 201) {
-    document.cookie = `Username=${user}; path=/; SameSite=Lax`;
-    const deletion = await fetch(
-      "http://127.0.0.1:5090/api/user/delete_invite",
-      {
-        method: "DELETE",
-        credentials: "include",
-        headers: {
-          url: inviteId,
-        },
-      },
-    );
-    if (deletion.status === 200) {
-      router.push("/auth/login");
-    } else {
-      alert("An error occurred, please try again later.");
-    }
-  } else {
-    alert("An error occurred, please try again later.");
-  }
-};
 
 /**
  * Register page component that displays the register form.
@@ -69,13 +13,65 @@ export default function Register() {
   const router = useRouter();
   const curpath = usePathname();
   const inviteId = curpath.split("/").pop() || "";
+
+  const handleUsernameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setUsername(e.target.value);
+    },
+    []
+  );
+
+  const handlePasswordChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setPassword(e.target.value);
+    },
+    []
+  );
+
+  const handleSubmit = useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+
+      const response = await fetch("http://127.0.0.1:5090/api/user/register", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Username: username,
+          Password: password,
+        },
+      });
+
+      if (response.status === 201) {
+        document.cookie = `Username=${username}; path=/; SameSite=Lax`;
+        const deletion = await fetch(
+          "http://127.0.0.1:5090/api/user/delete_invite",
+          {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              url: inviteId,
+            },
+          }
+        );
+        if (deletion.status === 200) {
+          router.push("/auth/login");
+        } else {
+          alert("An error occurred, please try again later.");
+        }
+      } else {
+        alert("An error occurred, please try again later.");
+      }
+    },
+    [username, password, inviteId, router]
+  );
+
   return (
     <div className="flex w-full h-screen bg-linear-to-br from-schemes-dark-surface-container-lowest to-schemes-dark-medium-contrast-inverse-primary items-center justify-center">
       <div className="h-[292px] w-[388px] bg-clip-border bg-schemes-dark-surface-container-low rounded-xl flex flex-col items-center justify-center overflow-hidden relative shadow-md shadow-schemes-dark-surface-container-lowest">
         <div className="flex h-[600px] w-96 bg-conic rounded-xl from-transparent to-schemes-dark-on-background from-85% items-center justify-center absolute animate-spin-slow" />
         <form
           className="flex flex-col items-center justify-start h-auto w-96 bg-schemes-dark-surface-container-low rounded-xl relative gap-4 p-6"
-          onSubmit={(e) => handleClick(e, username, password, inviteId, router)}
+          onSubmit={handleSubmit}
         >
           <Image
             src="/icons/icon.png"
@@ -89,14 +85,14 @@ export default function Register() {
             type="text"
             placeholder="Username"
             className="appearance-none focus:outline-none bg-schemes-dark-surface-dim shadow-inner shadow-schemes-dark-surface-container-lowest rounded-xl text-schemes-dark-on-background bg-opacity-0 font-sans font-medium text-md whitespace-nowrap h-12 w-full pl-4"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleUsernameChange}
             required
           />
           <input
             type="password"
             placeholder="Password"
             className="appearance-none focus:outline-none bg-schemes-dark-surface-dim shadow-inner shadow-schemes-dark-surface-container-lowest rounded-xl text-schemes-dark-on-background bg-opacity-0 font-sans font-medium text-md whitespace-nowrap h-12 w-full pl-4"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             required
           />
           <input
