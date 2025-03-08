@@ -2,6 +2,7 @@ from . import api_namespace_user
 from flask_restx import Resource, fields, reqparse
 from hashlib import sha256
 from app.models.user import User
+from flask import make_response
 
 
 @api_namespace_user.route("user/login")
@@ -33,5 +34,8 @@ class UserLogin(Resource):
         password = sha256(args.get("Password").strip().encode()).hexdigest()
         token = User(username).login(password)
         if token:
-            return {}, 202
+            response = make_response({}, 202)
+            response.headers["TOKEN"] = token
+
+            return response
         return {}, 403
