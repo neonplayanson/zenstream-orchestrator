@@ -2,13 +2,7 @@
 
 import React, { useState } from "react";
 import { FaKey } from "react-icons/fa";
-import {
-  Gadget,
-  Greeting,
-  Codeblock,
-  Checkbox,
-  Button,
-} from "./components/page_util";
+import { Gadget, Greeting, Codeblock, Button } from "./components/page_util";
 import generateInvite from "./modules/invites";
 
 /**
