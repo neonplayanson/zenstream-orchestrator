@@ -14,14 +14,12 @@ from app.models.user import User
 class UserAuthenticate(Resource):
     get_model = api_namespace_user.model(
         "Get",
-        {
-            "authorized": fields.Raw(
-                description=""
-            )
-        },
+        {"authorized": fields.Raw(description="")},
     )
     get_parser = reqparse.RequestParser()
-    get_parser.add_argument("Username", type=str, help="Username of the user", location="headers")
+    get_parser.add_argument(
+        "Username", type=str, help="Username of the user", location="headers"
+    )
 
     @authenticate
     @api_namespace_user.doc(parser=get_parser)

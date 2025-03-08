@@ -23,7 +23,8 @@ class User:
             return False
 
         expired_keys = [
-            key for key in data.keys()
+            key
+            for key in data.keys()
             if datetime.strptime(key, "%Y-%m-%d %H:%M:%S.%f") < datetime.now()
         ]
 
@@ -58,12 +59,13 @@ class User:
                 "SELECT client_tokens FROM users WHERE username = ?",
                 (self.username,),
             )
-            data = json.loads(data[0][0])         
+            data = json.loads(data[0][0])
         except Exception:
             return False
 
         expired_keys = [
-            key for key in data.keys()
+            key
+            for key in data.keys()
             if datetime.strptime(key, "%Y-%m-%d %H:%M:%S.%f") < datetime.now()
         ]
 

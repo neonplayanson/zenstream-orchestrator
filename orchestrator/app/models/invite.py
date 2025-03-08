@@ -41,6 +41,9 @@ class Invite:
         Returns:
             bool: True if deletion was successful, False otherwise
         """
-        if type(self._db.execute("DELETE FROM invites WHERE url = ?", (inviteid,))) is list:
+        if (
+            type(self._db.execute("DELETE FROM invites WHERE url = ?", (inviteid,)))
+            is list
+        ):
             return True
         return False
