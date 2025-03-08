@@ -42,8 +42,7 @@ def authenticate(func):
 
             db = Config()._database
             result = db.execute(
-                "SELECT client_tokens FROM users WHERE username = ?",
-                (user,)
+                "SELECT client_tokens FROM users WHERE username = ?", (user,)
             )
             print(result)
             if not result:
@@ -52,9 +51,9 @@ def authenticate(func):
             tokens = json.loads(result[0][0])
             if not any(token in v for v in tokens.values()):
                 return {"message": "Invalid token"}, 403
-                
+
             return func(*args, **kwargs)
-            
+
         except Exception as e:
             print(f"Authentication error: {e}")
             return {"message": "Authentication failed"}, 403
