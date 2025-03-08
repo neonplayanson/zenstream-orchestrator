@@ -44,8 +44,8 @@ def authenticate(func):
             "SELECT * FROM users WHERE username = ? AND client_tokens LIKE ?",
             (user, f"%{token}%"),
         )
-        if not bool(check):
-            return {"message": "User is not authenticated to this action"}, 403
-        return func(*args, **kwargs)
+        if check:
+            return func(*args, **kwargs)
+        return {"message": "User is not authenticated to this action"}, 403
 
     return wrapper
