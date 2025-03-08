@@ -18,14 +18,14 @@ export default function Register() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setUsername(e.target.value);
     },
-    []
+    [],
   );
 
   const handlePasswordChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(e.target.value);
     },
-    []
+    [],
   );
 
   const handleSubmit = useCallback(
@@ -51,7 +51,7 @@ export default function Register() {
             headers: {
               url: inviteId,
             },
-          }
+          },
         );
         if (deletion.status === 200) {
           router.push("/auth/login");
@@ -62,7 +62,7 @@ export default function Register() {
         alert("An error occurred, please try again later.");
       }
     },
-    [username, password, inviteId, router]
+    [username, password, inviteId, router],
   );
 
   return (

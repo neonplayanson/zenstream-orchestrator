@@ -34,7 +34,9 @@ class UserLogin(Resource):
         password = args.get("Password")
         if type(username) is not str or type(password) is not str:
             return {}, 403
-        token = User(username.strip()).login(sha256(password.strip().encode()).hexdigest())
+        token = User(username.strip()).login(
+            sha256(password.strip().encode()).hexdigest()
+        )
         if token:
             response = make_response({}, 202)
             response.headers["TOKEN"] = token

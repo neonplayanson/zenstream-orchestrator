@@ -16,14 +16,14 @@ export default function Dashboard() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setUsername(e.target.value);
     },
-    []
+    [],
   );
 
   const handlePasswordChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(e.target.value);
     },
-    []
+    [],
   );
 
   const handleLogin = useCallback(
@@ -49,7 +49,7 @@ export default function Dashboard() {
         alert("Invalid credentials");
       }
     },
-    [username, password, router]
+    [username, password, router],
   );
 
   return (
