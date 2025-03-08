@@ -29,7 +29,6 @@ const handleClick = async (
   });
 
   const token = response.headers.get("TOKEN");
-  console.log(token);
 
   if (response.status === 202 && token) {
     document.cookie = `Username=${user}; path=/;`;

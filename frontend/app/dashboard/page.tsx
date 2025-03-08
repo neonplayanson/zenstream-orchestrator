@@ -18,10 +18,15 @@ import generateInvite from "./modules/invites";
 export default function Dashboard() {
   const [invite, setInvite] = useState<string>("ur mother");
 
+  /**
+   * Handles the generation of a new invite link.
+   * Makes an asynchronous call to generate a unique invite code and
+   * updates the invite state with a formatted registration URL.
+   */
   const handleGenerateInvite = async () => {
     try {
       const newInvite = await generateInvite.generateInvite();
-      setInvite("http://127.0.0.1:3000/auth/register/" + newInvite);
+      setInvite(`http://127.0.0.1:3000/auth/register/${newInvite}`);
     } catch (error) {
       console.error("Error generating invite:", error);
     }
