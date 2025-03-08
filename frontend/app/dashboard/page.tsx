@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { FaKey } from "react-icons/fa";
 import {
   Gadget,
@@ -9,34 +9,48 @@ import {
   Checkbox,
   Button,
 } from "./components/page_util";
+import generateInvite from "./modules/invites";
 
 /**
  * Dashboard component that displays the main dashboard page.
  * @returns A React element containing the dashboard page.
  */
 export default function Dashboard() {
+  const [invite, setInvite] = useState<string>("ur mother");
+
+  /**
+   * Handles the generation of a new invite link.
+   * Makes an asynchronous call to generate a unique invite code and
+   * updates the invite state with a formatted registration URL.
+   */
+  const handleGenerateInvite = async () => {
+    try {
+      const newInvite = await generateInvite.generateInvite();
+      setInvite(`http://127.0.0.1:3000/auth/register/${newInvite}`);
+    } catch (error) {
+      console.error("Error generating invite:", error);
+    }
+  };
+
   return (
     <div className="w-full h-screen bg-schemes-dark-surface-container-lowest items-start justify-start">
       <Greeting user="user" />
       <div className="grid grid-cols-1 md:grid-cols-2 items-start justify-center pt-16">
         <div className="flex flex-col items-start justify-start w-full h-full gap-9 singlecol-padding md:leftcol-padding">
           <Gadget
-            title="Generate API Key"
+            title="Generate Orchestrator Invite"
             icon={<FaKey className="size-5 text-schemes-dark-on-background" />}
             content={
               <form
                 method="POST"
                 className="h-full w-full flex flex-col items-start justify-start gap-4 py-6"
               >
-                <Codeblock code="https://theatre.lococto.me/ jskadfkl sdlkajl fsdlkj flsdjfklsj dlkfjskl;jf" />
-                <div className="w-full h-auto flex flex-row flex-wrap items-start justify-start">
-                  <Checkbox label="Permission 1" />
-                  <Checkbox label="Permission 2" />
-                  <Checkbox label="Permission 3" />
-                  <Checkbox label="Permission 4" />
-                  <Checkbox label="Permission 5" />
-                </div>
-                <Button label="Generate" buttontype="submit" />
+                <Codeblock code={invite} />
+                <Button
+                  label="Generate"
+                  buttontype="submit"
+                  onClick={handleGenerateInvite}
+                />
               </form>
             }
           />

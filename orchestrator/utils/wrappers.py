@@ -36,7 +36,7 @@ def authenticate(func):
         try:
             token = request.headers.get("TOKEN")
             user = request.headers.get("Username")
-        except Exception as e:
+        except Exception:
             return {"message": "Username or Token not found"}, 401
 
         db = Config()._database
