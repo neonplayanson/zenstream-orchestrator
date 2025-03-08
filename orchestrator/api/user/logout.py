@@ -23,7 +23,7 @@ class UserLogout(Resource):
         args = self.get_parser.parse_args()
         username = args.get("Username").strip()
         token = args.get("TOKEN")
-        
+
         if User(username).logout(token):
             return {}, 200
         return {}, 500

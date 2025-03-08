@@ -16,7 +16,7 @@ class UserCheckInvite(Resource):
         """Check if an invite is valid."""
         args = self.get_parser.parse_args()
         inviteid = args.get("url").strip()
-        
+
         if Invite().validate(inviteid):
             return {}, 202
         return {}, 403
