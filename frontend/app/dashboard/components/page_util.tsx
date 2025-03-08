@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactElement } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { FaCopy } from "react-icons/fa";
 
 /**
@@ -112,18 +112,22 @@ interface ButtonProps {
 }
 
 function Button({ label, buttontype, onClick }: ButtonProps) {
-  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (onClick) {
-      await onClick();
-    }
-  };
   /**
    * Handles the click event for the button.
    * Prevents the default form submission behavior and performs a custom action.
+   * Memoized to prevent unnecessary re-renders.
    *
    * @param event - The mouse event triggered by clicking the button.
    */
+  const handleClick = useCallback(
+    async (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      if (onClick) {
+        await onClick();
+      }
+    },
+    [onClick]
+  );
 
   return (
     <button

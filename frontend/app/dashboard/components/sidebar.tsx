@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 import Image from "next/image";
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 type TabParams = {
   icon: React.ReactElement;
@@ -70,52 +69,53 @@ function Tab({ icon, path }: TabParams) {
 }
 
 /**
- * Handles the click event for the logout button.
- * Clears the authentication cookies and redirects to the login page.
- *
- * @param event - The mouse event triggered by clicking the button.
- * @param router - The Next.js router instance for navigation.
- */
-const handleClick = async (
-  event: React.MouseEvent<HTMLAnchorElement>,
-  router: AppRouterInstance,
-) => {
-  event.preventDefault();
-
-  const getCookie = (name: string) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(";").shift();
-  };
-
-  const user = getCookie("Username");
-  const token = getCookie("TOKEN");
-
-  if (!user || !token) {
-    router.push("/auth/login");
-    return;
-  }
-
-  await fetch("http://127.0.0.1:5090/api/user/login", {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      Username: user || "",
-      TOKEN: token || "",
-    },
-  });
-
-  document.cookie = "Username=; path=/; SameSite=Lax";
-  document.cookie = "TOKEN=; path=/; SameSite=Lax";
-  router.push("/auth/login");
-};
-
-/**
  * Navbar component that displays the navigation bar.
  * @returns A React element containing the navigation bar.
  */
 export default function Navbar() {
   const router = useRouter();
+
+  /**
+   * Handles the click event for the logout button.
+   * Clears the authentication cookies and redirects to the login page.
+   * Memoized to prevent unnecessary re-renders.
+   *
+   * @param event - The mouse event triggered by clicking the button.
+   */
+  const handleClick = useCallback(
+    async (event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+
+      const getCookie = (name: string) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop()?.split(";").shift();
+        return null;
+      };
+
+      const user = getCookie("Username");
+      const token = getCookie("TOKEN");
+
+      if (!user || !token) {
+        router.push("/auth/login");
+        return;
+      }
+
+      await fetch("http://127.0.0.1:5090/api/user/login", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Username: user || "",
+          TOKEN: token || "",
+        },
+      });
+
+      document.cookie = "Username=; path=/; SameSite=Lax";
+      document.cookie = "TOKEN=; path=/; SameSite=Lax";
+      router.push("/auth/login");
+    },
+    [router]
+  );
 
   return (
     <div className="fixed flex flex-col bg-schemes-dark-background h-full w-20 items-center justify-start border-r-[1px] border-schemes-dark-surface-container-low">
@@ -134,7 +134,7 @@ export default function Navbar() {
       <div className="flex items-center justify-center size-12 hover:size-14 ease-out transition-all duration-150 group rotate-180 pt-6 cursor-context-pointer">
         <div className="absolute size-9 blur-none rounded-full group-hover:blur-md group-hover:bg-schemes-dark-on-surface-variant ease-out transition-all duration-150" />
         <a
-          onClick={(e) => handleClick(e, router)}
+          onClick={handleClick}
           className="relative bg-schemes-dark-surface-container-lowest rounded-full size-12 flex items-center justify-center ease-out group-hover:size-14 group-hover:bg-schemes-dark-surface-variant transition-all duration-150"
         >
           <IoLogOut className="size-8 text-schemes-dark-on-background" />
