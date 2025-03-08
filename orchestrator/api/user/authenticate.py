@@ -22,9 +22,6 @@ class AuthenticateUser(Resource):
         args = self.get_parser.parse_args()
         username = args.get("Username").strip()
         token = args.get("TOKEN").strip()
-        args = self.get_parser.parse_args()
-        username = args.get("Username").strip()
-        token = args.get("TOKEN").strip()
 
         if User(username).authenticate(token):
             return {}, 202
