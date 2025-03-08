@@ -105,23 +105,25 @@ function Checkbox({ label }: { label: string }) {
  * @param buttontype - The type of the button (button, submit, or reset).
  * @returns A React element containing the button.
  */
-function Button({
-  label,
-  buttontype,
-}: {
+interface ButtonProps {
   label: string;
   buttontype: "button" | "submit" | "reset" | undefined;
-}) {
+  onClick?: () => Promise<void>;
+}
+
+function Button({ label, buttontype, onClick }: ButtonProps) {
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (onClick) {
+      await onClick();
+    }
+  };
   /**
    * Handles the click event for the button.
    * Prevents the default form submission behavior and performs a custom action.
    *
    * @param event - The mouse event triggered by clicking the button.
    */
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    //todo: generate api key
-  };
 
   return (
     <button

@@ -15,7 +15,7 @@ const handleClick = async (
   event: React.FormEvent<HTMLFormElement>,
   user: string,
   password: string,
-  router: AppRouterInstance,
+  router: AppRouterInstance
 ) => {
   event.preventDefault();
 
@@ -29,6 +29,7 @@ const handleClick = async (
   });
 
   const token = response.headers.get("TOKEN");
+  console.log(token);
 
   if (response.status === 202 && token) {
     document.cookie = `Username=${user}; path=/;`;
