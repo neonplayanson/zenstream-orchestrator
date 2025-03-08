@@ -114,7 +114,7 @@ export default function Navbar() {
       document.cookie = "TOKEN=; path=/; SameSite=Lax";
       router.push("/auth/login");
     },
-    [router]
+    [router],
   );
 
   return (
