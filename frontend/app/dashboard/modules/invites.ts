@@ -17,7 +17,7 @@ async function generateInvite(): Promise<string | undefined> {
           Username: user || "",
           TOKEN: token || "",
         },
-      }
+      },
     );
 
     if (response.ok) {
