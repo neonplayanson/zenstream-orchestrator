@@ -1,7 +1,7 @@
 from . import api_namespace_user
 from flask_restx import Resource, reqparse
-from app.config import Config
-import json
+from app.models.user import User
+from utils.wrappers import authenticate
 
 
 @api_namespace_user.route("user/logout")
@@ -12,29 +12,21 @@ class UserLogout(Resource):
     )
     get_parser.add_argument("TOKEN", type=str, help="The token.", location="headers")
 
+    @authenticate
     @api_namespace_user.doc(parser=get_parser)
     @api_namespace_user.response(200, description="User logged out.")
+    @api_namespace_user.response(400, description="Invalid credentials.")
     @api_namespace_user.response(
         500, description="An error occurred while logging out user."
     )
     def get(self):
         """Logout the user."""
         args = self.get_parser.parse_args()
-        username = args.get("Username").strip()
+        username = args.get("Username")
         token = args.get("TOKEN")
-        db = Config()._database
+        if type(username) is not str or type(token) is not str:
+            return {}, 400
 
-        try:
-            data = db.execute(
-                "SELECT client_tokens FROM users WHERE username = ?",
-                (username,),
-            )
-            data = json.loads(data[0][0])
-            data = {k: v for k, v in data.items() if v != token}
-            db.execute(
-                "UPDATE users SET client_tokens = ? WHERE username = ?",
-                (json.dumps(data), username),
-            )
+        if User(username).logout(token):
             return {}, 200
-        except Exception:
-            return {}, 500
+        return {}, 500

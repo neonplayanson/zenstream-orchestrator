@@ -6,6 +6,7 @@
 from functools import wraps
 from app.config import Config
 from flask import request
+import json
 
 
 def authenticate(func):
@@ -36,16 +37,25 @@ def authenticate(func):
         try:
             token = request.headers.get("TOKEN")
             user = request.headers.get("Username")
-        except Exception as e:
-            return {"message": "Username or Token not found"}, 401
+            if not token or not user:
+                return {"message": "Username or Token not found"}, 401
 
-        db = Config()._database
-        check = db.execute(
-            "SELECT * FROM users WHERE username = ? AND client_tokens LIKE ?",
-            (user, f"%{token}%"),
-        )
-        if not bool(check):
-            return {"message": "User is not authenticated to this action"}, 403
-        return func(*args, **kwargs)
+            db = Config()._database
+            result = db.execute(
+                "SELECT client_tokens FROM users WHERE username = ?", (user,)
+            )
+            print(result)
+            if not result:
+                return {"message": "User not found"}, 403
+
+            tokens = json.loads(result[0][0])
+            if not any(token in v for v in tokens.values()):
+                return {"message": "Invalid token"}, 403
+
+            return func(*args, **kwargs)
+
+        except Exception as e:
+            print(f"Authentication error: {e}")
+            return {"message": "Authentication failed"}, 403
 
     return wrapper

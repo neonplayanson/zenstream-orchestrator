@@ -1,6 +1,6 @@
 from . import api_namespace_user
 from flask_restx import Resource, reqparse
-from app.config import Config
+from app.models.user import User
 from hashlib import sha256
 from flask import request
 from urllib.parse import urlparse
@@ -27,20 +27,17 @@ class UserRegister(Resource):
     def post(self):
         """Register the user."""
         args = self.get_parser.parse_args()
-        username = args.get("Username").strip()
-        password = sha256(args.get("Password").strip().encode()).hexdigest()
+        username = args.get("Username")
+        password = args.get("Password")
+        if type(username) is not str or type(password) is not str:
+            return {}, 403
         invite_id = urlparse(request.headers.get("Referer")).path.split("/")[-2]
 
-        db = Config()._database
-
-        check = db.execute("SELECT * FROM invites WHERE url = ?", (invite_id,))
-        if not check:
+        success, invalid = User(
+            username.strip(), sha256(password.strip().encode()).hexdigest()
+        ).register(invite_id)
+        if invalid:
             return {}, 403
-
-        try:
-            db.execute("INSERT INTO users VALUES (?, ?, '{}')", (username, password))
+        if success:
             return {}, 201
-        except Exception as e:
-            if "UNIQUE constraint failed" in str(e):
-                return {}, 409
-            return {}, 500
+        return {}, 409
