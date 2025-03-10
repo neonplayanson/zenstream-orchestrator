@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import cookieManager from "../cookie_manager";
 
 type TabParams = {
   icon: React.ReactElement;
@@ -86,15 +87,8 @@ export default function Navbar() {
     async (event: React.MouseEvent<HTMLAnchorElement>) => {
       event.preventDefault();
 
-      const getCookie = (name: string) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop()?.split(";").shift();
-        return null;
-      };
-
-      const user = getCookie("Username");
-      const token = getCookie("TOKEN");
+      const user = (await cookieManager.getCookie("Username"))?.toString();
+      const token = (await cookieManager.getCookie("TOKEN"))?.toString();
 
       if (!user || !token) {
         router.push("/auth/login");
@@ -110,8 +104,6 @@ export default function Navbar() {
         },
       });
 
-      document.cookie = "Username=; path=/; SameSite=Lax";
-      document.cookie = "TOKEN=; path=/; SameSite=Lax";
       router.push("/auth/login");
     },
     [router],
