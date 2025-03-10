@@ -18,7 +18,7 @@ class UserCheckInvite(Resource):
         inviteid = args.get("url")
         if type(inviteid) is not str:
             return {"message": "Invalid invite."}, 403
-        
+
         if Invite().validate(inviteid.strip()):
             return {}, 202
         return {}, 403
