@@ -2,12 +2,13 @@
 import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
+import cookieManager from "@/app/dashboard/cookie_manager";
 
 /**
  * Register page component that displays the register form.
  * @returns A React element containing the register page.
  */
-export default function Register() {
+export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function Register() {
       });
 
       if (response.status === 201) {
-        document.cookie = `Username=${username}; path=/; SameSite=Lax`;
+        await cookieManager.setCookies(username, "");
         const deletion = await fetch(
           "http://127.0.0.1:5090/api/user/delete_invite",
           {
