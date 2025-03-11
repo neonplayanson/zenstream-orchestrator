@@ -4,10 +4,12 @@ export async function middleware(req: NextRequest) {
   const destination = req.nextUrl.pathname;
   const referer = req.headers.get("referer");
 
-  if (referer === "/dashboard") {
+  if (destination === "/dashboard") {
+    console.log("referer", referer);
     if (!referer || !referer.includes("/auth/login")) {
       const token = req.cookies.get("TOKEN")?.value || "";
       const username = req.cookies.get("Username")?.value || "";
+      console.log(token, username);
 
       if (!token || !username) {
         console.log("Missing credentials");
@@ -23,7 +25,7 @@ export async function middleware(req: NextRequest) {
             Username: username,
             TOKEN: token,
           },
-        },
+        }
       );
 
       if (response.status === 202) {
@@ -46,7 +48,7 @@ export async function middleware(req: NextRequest) {
         headers: {
           url: invite_id,
         },
-      },
+      }
     );
 
     if (response.status === 202) {
@@ -58,5 +60,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard", "/auth/register/:path*"],
+  matcher: ["/", "/dashboard", "/auth/register/:path*"],
 };

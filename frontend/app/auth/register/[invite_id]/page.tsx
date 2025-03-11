@@ -19,21 +19,21 @@ export default function RegisterPage() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setUsername(e.target.value);
     },
-    [],
+    []
   );
 
   const handlePasswordChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(e.target.value);
     },
-    [],
+    []
   );
 
   const handleSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const response = await fetch("http://127.0.0.1:5090/api/user/register", {
+      const response = await fetch("http://127.0.0.1:9090/api/user/register", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -45,14 +45,14 @@ export default function RegisterPage() {
       if (response.status === 201) {
         await cookieManager.setCookies(username, "");
         const deletion = await fetch(
-          "http://127.0.0.1:5090/api/user/delete_invite",
+          "http://127.0.0.1:9090/api/user/delete_invite",
           {
             method: "DELETE",
             credentials: "include",
             headers: {
               url: inviteId,
             },
-          },
+          }
         );
         if (deletion.status === 200) {
           router.push("/auth/login");
@@ -63,7 +63,7 @@ export default function RegisterPage() {
         alert("An error occurred, please try again later.");
       }
     },
-    [username, password, inviteId, router],
+    [username, password, inviteId, router]
   );
 
   return (
