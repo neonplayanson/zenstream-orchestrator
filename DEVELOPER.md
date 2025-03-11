@@ -6,7 +6,7 @@ The ZenStream Orchestrator provides a Swagger API for easy interaction with the 
 
 1. **Access the Swagger UI**:
 
-   - Open your web browser and navigate to `http://localhost:5090/api/swagger/` if running locally.
+   - Open your web browser and navigate to `http://localhost:9090/api/swagger/` if running locally.
    - You will see the Swagger UI with all the available endpoints and their descriptions.
 
 2. **Explore Endpoints**:

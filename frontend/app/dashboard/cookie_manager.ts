@@ -32,7 +32,7 @@ const setCookie = async (
   value: string,
   path?: string,
   sameSite?: boolean | "lax" | "strict" | "none",
-  secure?: boolean
+  secure?: boolean,
 ) => {
   const cookieStore = await cookies();
   cookieStore.set(name, value, {
