@@ -5,7 +5,7 @@ import Image from "next/image";
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import cookieManager from "../cookie_manager";
+import { getCookie, deleteCookie } from "cookies-next";
 
 type TabParams = {
   icon: React.ReactElement;
@@ -87,15 +87,15 @@ export default function Navbar() {
     async (event: React.MouseEvent<HTMLAnchorElement>) => {
       event.preventDefault();
 
-      const user = (await cookieManager.getCookie("Username"))?.toString();
-      const token = (await cookieManager.getCookie("TOKEN"))?.toString();
+      const user = getCookie("Username")?.toString();
+      const token = getCookie("TOKEN")?.toString();
 
       if (!user || !token) {
         router.push("/auth/login");
         return;
       }
 
-      await fetch("http://127.0.0.1:5090/api/user/login", {
+      await fetch("http://127.0.0.1:9090/api/user/login", {
         method: "GET",
         credentials: "include",
         headers: {
@@ -104,9 +104,12 @@ export default function Navbar() {
         },
       });
 
+      deleteCookie("Username");
+      deleteCookie("TOKEN");
+
       router.push("/auth/login");
     },
-    [router],
+    [router]
   );
 
   return (

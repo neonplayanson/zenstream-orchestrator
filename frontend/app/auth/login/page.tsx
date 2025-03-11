@@ -17,21 +17,21 @@ export default function LoginPage() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setUsername(e.target.value);
     },
-    [],
+    []
   );
 
   const handlePasswordChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(e.target.value);
     },
-    [],
+    []
   );
 
   const handleLogin = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const response = await fetch("http://127.0.0.1:5090/api/user/login", {
+      const response = await fetch("http://127.0.0.1:9090/api/user/login", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -49,7 +49,7 @@ export default function LoginPage() {
         alert("Invalid credentials");
       }
     },
-    [username, password, router],
+    [username, password, router]
   );
 
   return (
