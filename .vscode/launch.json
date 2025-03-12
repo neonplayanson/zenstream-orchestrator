@@ -15,9 +15,15 @@
       },
       "autoReload": {
         "enable": true,
-        "pattern": ["**/*.py"]
+        "pattern": [
+          "**/*.py"
+        ]
       },
-      "args": ["run", "--no-debugger", "--no-reload"]
+      "args": [
+        "run",
+        "--no-debugger",
+        "--no-reload"
+      ]
     },
     {
       "name": "Debug Orchestrator: Frontend",
