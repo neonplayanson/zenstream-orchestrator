@@ -1,9 +1,3 @@
-### ======================================================================
-### ZenStream Orchestrator
-### Copyright 2019-2024 © Rystal. All Rights Reserved.
-### ======================================================================
-
-
 from flask_restx import Resource, fields, reqparse
 from utils.wrappers import authenticate
 from . import api_namespace_user
