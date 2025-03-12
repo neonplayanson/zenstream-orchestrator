@@ -69,7 +69,7 @@ class User:
             "DELETE FROM client_secrets WHERE client_secret = ?",
             (token,),
         )
-        
+
         if operation:
             return True
         return False
