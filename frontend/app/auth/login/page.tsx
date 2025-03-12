@@ -17,14 +17,14 @@ export default function LoginPage() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setUsername(e.target.value);
     },
-    [],
+    []
   );
 
   const handlePasswordChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(e.target.value);
     },
-    [],
+    []
   );
 
   const handleLogin = useCallback(
@@ -43,13 +43,13 @@ export default function LoginPage() {
       const token = response.headers.get("TOKEN");
 
       if (response.status === 202 && token) {
-        await cookieManager.setCookies(username, token);
+        cookieManager.setCookies(username, token);
         router.push("/dashboard");
       } else {
         alert("Invalid credentials");
       }
     },
-    [username, password, router],
+    [username, password, router]
   );
 
   return (
