@@ -5,6 +5,8 @@ from app.config import Config
 from app.modules.token import Token
 
 
+# todo: Migrate to client_secrets table
+
 class User:
     def __init__(self, username: str, password: str = None):
         self.username = username
@@ -13,30 +15,19 @@ class User:
 
     def authenticate(self, token: str) -> bool:
         """Authenticate user with token"""
-        try:
-            data = self._db.execute(
-                "SELECT client_tokens FROM users WHERE username = ?",
-                (self.username,),
-            )
-            data = json.loads(data[0][0])
-        except Exception:
-            return False
+        self._db.execute("""
+            DELETE FROM client_secrets 
+            WHERE username = ? 
+            AND datetime(expiration) < datetime('now')
+        """, (self.username,))
 
-        expired_keys = [
-            key
-            for key in data.keys()
-            if datetime.strptime(key, "%Y-%m-%d %H:%M:%S.%f") < datetime.now()
-        ]
-
-        for key in expired_keys:
-            del data[key]
-
-        self._db.execute(
-            "UPDATE users SET client_tokens = ? WHERE username = ?",
-            (json.dumps(data), self.username),
+        check = self._db.execute(
+            "SELECT client_secret FROM client_secrets WHERE username = ?",
+            (self.username,),
         )
+        print(check)
 
-        return any(token in v for v in data.values())
+        return bool(check and check[0][0] == token)
 
     def register(self, inviteid: str) -> tuple[bool, bool]:
         """Register new user with invite"""
@@ -54,66 +45,37 @@ class User:
 
     def login(self, password: str) -> str | bool:
         """Login user and return token"""
-        try:
-            data = self._db.execute(
-                "SELECT client_tokens FROM users WHERE username = ?",
-                (self.username,),
-            )
-            data = json.loads(data[0][0])
-        except Exception:
-            return False
-
-        expired_keys = [
-            key
-            for key in data.keys()
-            if datetime.strptime(key, "%Y-%m-%d %H:%M:%S.%f") < datetime.now()
-        ]
-
-        for key in expired_keys:
-            del data[key]
-
-        self._db.execute(
-            "UPDATE users SET client_tokens = ? WHERE username = ?",
-            (json.dumps(data), self.username),
-        )
-
         check = self._db.execute(
             "SELECT * FROM users WHERE username = ? AND password = ?",
             (self.username, password),
         )
 
         if check:
+            self._db.execute("""
+            DELETE FROM client_secrets 
+            WHERE username = ? 
+            AND datetime(expiration) < datetime('now')
+            """, (self.username,))
+
             token = Token.generate_token()
 
-            data = self._db.execute(
-                "SELECT client_tokens FROM users WHERE username = ?",
-                (self.username,),
-            )
-            data = json.loads(data[0][0])
-            data[str(datetime.now() + timedelta(days=7))] = token
             self._db.execute(
-                "UPDATE users SET client_tokens = ? WHERE username = ?",
-                (json.dumps(data), self.username),
+                "INSERT INTO client_secrets VALUES (?, ?, ?)",
+                (self.username, token, str(datetime.now() + timedelta(days=7))),
             )
             return token
         return False
 
     def logout(self, token: str) -> bool:
         """Logout user by removing token"""
-        try:
-            data = self._db.execute(
-                "SELECT client_tokens FROM users WHERE username = ?",
-                (self.username,),
-            )
-            data = json.loads(data[0][0])
-            data = {k: v for k, v in data.items() if v != token}
-            self._db.execute(
-                "UPDATE users SET client_tokens = ? WHERE username = ?",
-                (json.dumps(data), self.username),
-            )
+        operation = self._db.execute(
+            "DELETE FROM client_secrets WHERE client_secret = ?",
+            (token,),
+        )
+        
+        if operation:
             return True
-        except Exception:
-            return False
+        return False
 
     def info(self) -> dict:
         """Return user info"""
@@ -125,7 +87,6 @@ class User:
             return {
                 "username": data[0][0],
                 "password": data[0][1],
-                "client_tokens": json.loads(data[0][2]),
             }
         except Exception:
             return {}
