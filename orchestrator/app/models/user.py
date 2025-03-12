@@ -12,7 +12,6 @@ class User:
 
     def authenticate(self, token: str) -> bool:
         """Authenticate user with token"""
-        print(self.username, token)
         self._db.execute("""
             DELETE FROM client_secrets
             WHERE username = ?
