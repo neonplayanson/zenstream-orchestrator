@@ -27,7 +27,7 @@ class Config:
         """
         self._base_address = {
             "frontend": "http://127.0.0.1:3000",
-            "backend": "http://127.0.0.1:5090"
+            "backend": "http://127.0.0.1:5090",
         }
 
         self.create_database()

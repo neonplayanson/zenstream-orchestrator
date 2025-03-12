@@ -26,7 +26,7 @@ export async function middleware(req: NextRequest) {
             Username: username,
             TOKEN: token,
           },
-        }
+        },
       );
 
       if (response.status === 202) {
