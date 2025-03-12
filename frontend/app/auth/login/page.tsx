@@ -2,15 +2,16 @@
 import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import cookieManager from "@/app/dashboard/cookie_manager";
 
 /**
  * Login page component that displays the login form.
  * @returns {JSX.Element} A React element containing the login page.
  */
-export default function Dashboard() {
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
-	const router = useRouter();
+export default function LoginPage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleUsernameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +43,7 @@ export default function Dashboard() {
       const token = response.headers.get("TOKEN");
 
       if (response.status === 202 && token) {
-        document.cookie = `Username=${username}; path=/;`;
-        document.cookie = `TOKEN=${token}; path=/;`;
+        cookieManager.setCookies(username, token);
         router.push("/dashboard");
       } else {
         alert("Invalid credentials");
