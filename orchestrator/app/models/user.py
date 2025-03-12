@@ -12,6 +12,7 @@ class User:
 
     def authenticate(self, token: str) -> bool:
         """Authenticate user with token"""
+        print(self.username, token)
         self._db.execute("""
             DELETE FROM client_secrets
             WHERE username = ?
@@ -22,9 +23,12 @@ class User:
             "SELECT client_secret FROM client_secrets WHERE username = ?",
             (self.username,),
         )
-        print(check)
 
-        return bool(check and check[0][0] == token)
+        for i in check:
+            if i[0] == token:
+                return True
+
+        return False
 
     def register(self, inviteid: str) -> tuple[bool, bool]:
         """Register new user with invite"""

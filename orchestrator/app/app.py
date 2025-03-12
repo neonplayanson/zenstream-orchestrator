@@ -8,6 +8,7 @@ from .config import load_config
 from flask_cors import CORS
 
 from api import api_namespaces
+from app.config import Config
 
 
 class Orchestrator:
@@ -31,7 +32,7 @@ class Orchestrator:
             self.app,
             resources={
                 r"/api/*": {
-                    "origins": ["http://localhost:3000", "http://127.0.0.1:3000"],
+                    "origins": ["http://localhost:3000", "http://127.0.0.1:3000", f"{Config()._base_address['frontend']}"],
                     "supports_credentials": True,
                     "allow_headers": [
                         "Content-Type",

@@ -1,4 +1,5 @@
 import { getCookie } from "cookies-next";
+import appConfig from "@/app/config";
 
 /**
  * Generates an invite by making a POST request to the server.
@@ -10,14 +11,14 @@ async function generateInvite(): Promise<string | undefined> {
     const token = getCookie("TOKEN");
 
     const response = await fetch(
-      "http://127.0.0.1:9090/api/user/generate_invite",
+      `${appConfig.apiUrl}/api/user/generate_invite`,
       {
         method: "POST",
         headers: {
           Username: String(user) || "",
           TOKEN: String(token) || "",
         },
-      },
+      }
     );
 
     if (response.ok) {
