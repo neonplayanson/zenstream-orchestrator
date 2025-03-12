@@ -4,8 +4,6 @@ from app.config import Config
 from app.modules.token import Token
 
 
-# todo: Migrate to client_secrets table
-
 class User:
     def __init__(self, username: str, password: str = None):
         self.username = username
@@ -15,8 +13,8 @@ class User:
     def authenticate(self, token: str) -> bool:
         """Authenticate user with token"""
         self._db.execute("""
-            DELETE FROM client_secrets 
-            WHERE username = ? 
+            DELETE FROM client_secrets
+            WHERE username = ?
             AND datetime(expiration) < datetime('now')
         """, (self.username,))
 
@@ -51,8 +49,8 @@ class User:
 
         if check:
             self._db.execute("""
-            DELETE FROM client_secrets 
-            WHERE username = ? 
+            DELETE FROM client_secrets
+            WHERE username = ?
             AND datetime(expiration) < datetime('now')
             """, (self.username,))
 

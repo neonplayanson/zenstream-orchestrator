@@ -2,6 +2,7 @@ from functools import wraps
 from flask import request
 from app.models.user import User
 
+
 def authenticate(func):
     """
     Authenticate decorator to ensure that the user is authenticated before
