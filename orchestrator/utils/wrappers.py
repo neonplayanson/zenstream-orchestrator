@@ -1,8 +1,3 @@
-### ======================================================================
-### ZenStream Orchestrator
-### Copyright 2019-2024 © Rystal. All Rights Reserved.
-### ======================================================================
-
 from functools import wraps
 from app.config import Config
 from flask import request

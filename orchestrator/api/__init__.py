@@ -1,8 +1,3 @@
-### ======================================================================
-### ZenStream Orchestrator
-### Copyright 2019-2024 © Rystal. All Rights Reserved.
-### ======================================================================
-
 import os
 import importlib
 from .user import api_namespace_user
