@@ -40,13 +40,11 @@ class Config:
                     CREATE TABLE IF NOT EXISTS users (
                         username TEXT UNIQUE NOT NULL,
                         password TEXT NOT NULL,
-                        client_tokens JSON NOT NULL
                     )
                 """,
                         "columns": {
                             "username": "TEXT UNIQUE NOT NULL",
                             "password": "TEXT NOT NULL",
-                            "client_tokens": "JSON NOT NULL",
                         },
                     },
                     "invites": {
@@ -72,6 +70,19 @@ class Config:
                             "api_key": "TEXT NOT NULL",
                         },
                     },
+                    "client_secrets": {
+                        "create": """
+                        CREATE TABLE IF NOT EXISTS client_secrets (
+                            username TEXT NOT NULL,
+                            client_secret TEXT NOT NULL,
+                            expiration TEXT NOT NULL
+                        )""",
+                        "columns": {
+                            "username": "TEXT NOT NULL",
+                            "client_secret": "TEXT NOT NULL",
+                            "expiration": "TEXT NOT NULL",
+                        },
+                    },
                 },
             },
             db_file=os.path.join(os.getcwd(), "sqlite/orchestrator.db"),
@@ -80,7 +91,7 @@ class Config:
         self.database.connect()
         self.database.create_tables()
         self.database.execute(
-            "INSERT OR IGNORE INTO users VALUES ('admin', ?, '{}')",
+            "INSERT OR IGNORE INTO users VALUES ('admin', ?)",
             (sha256("admin".encode()).hexdigest(),),
         )
 

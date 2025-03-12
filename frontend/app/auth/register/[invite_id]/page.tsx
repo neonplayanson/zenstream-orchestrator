@@ -43,7 +43,7 @@ export default function RegisterPage() {
       });
 
       if (response.status === 201) {
-        await cookieManager.setCookies(username, "");
+        cookieManager.setCookies(username, "");
         const deletion = await fetch(
           "http://127.0.0.1:9090/api/user/delete_invite",
           {
