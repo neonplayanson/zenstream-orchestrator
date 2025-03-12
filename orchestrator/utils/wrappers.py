@@ -1,7 +1,5 @@
 from functools import wraps
-from app.config import Config
 from flask import request
-import json
 from app.models.user import User
 
 def authenticate(func):

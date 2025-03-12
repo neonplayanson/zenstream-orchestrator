@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from hashlib import sha256
-import json
 from app.config import Config
 from app.modules.token import Token
 
