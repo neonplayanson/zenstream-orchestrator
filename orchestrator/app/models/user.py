@@ -12,11 +12,14 @@ class User:
 
     def authenticate(self, token: str) -> bool:
         """Authenticate user with token"""
-        self._db.execute("""
+        self._db.execute(
+            """
             DELETE FROM client_secrets
             WHERE username = ?
             AND datetime(expiration) < datetime('now')
-        """, (self.username,))
+        """,
+            (self.username,),
+        )
 
         check = self._db.execute(
             "SELECT client_secret FROM client_secrets WHERE username = ?",
@@ -51,11 +54,14 @@ class User:
         )
 
         if check:
-            self._db.execute("""
+            self._db.execute(
+                """
             DELETE FROM client_secrets
             WHERE username = ?
             AND datetime(expiration) < datetime('now')
-            """, (self.username,))
+            """,
+                (self.username,),
+            )
 
             token = Token.generate_token()
 
