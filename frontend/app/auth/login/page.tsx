@@ -31,7 +31,7 @@ export default function LoginPage() {
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const response = await fetch("http://127.0.0.1:5090/api/user/login", {
+      const response = await fetch("http://127.0.0.1:9090/api/user/login", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -43,7 +43,7 @@ export default function LoginPage() {
       const token = response.headers.get("TOKEN");
 
       if (response.status === 202 && token) {
-        cookieManager.setCookies(username, token);
+        await cookieManager.setCookies(username, token);
         router.push("/dashboard");
       } else {
         alert("Invalid credentials");

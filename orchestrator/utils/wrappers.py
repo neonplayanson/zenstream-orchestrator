@@ -39,7 +39,6 @@ def authenticate(func):
             result = db.execute(
                 "SELECT client_tokens FROM users WHERE username = ?", (user,)
             )
-            print(result)
             if not result:
                 return {"message": "User not found"}, 403
 
