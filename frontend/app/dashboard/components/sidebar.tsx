@@ -6,6 +6,7 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { getCookie, deleteCookie } from "cookies-next";
+import appConfig from "@/app/config";
 
 type TabParams = {
   icon: React.ReactElement;
@@ -95,7 +96,7 @@ export default function Navbar() {
         return;
       }
 
-      await fetch("http://127.0.0.1:9090/api/user/login", {
+      await fetch(`${appConfig.apiUrl}/api/user/login`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -109,7 +110,7 @@ export default function Navbar() {
 
       router.push("/auth/login");
     },
-    [router],
+    [router]
   );
 
   return (

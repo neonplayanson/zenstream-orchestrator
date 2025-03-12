@@ -3,6 +3,7 @@ import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import cookieManager from "@/app/dashboard/cookie_manager";
+import appConfig from "@/app/config";
 
 /**
  * Login page component that displays the login form.
@@ -31,7 +32,7 @@ export default function LoginPage() {
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const response = await fetch("http://127.0.0.1:9090/api/user/login", {
+      const response = await fetch(`${appConfig.apiUrl}/api/user/login`, {
         method: "POST",
         credentials: "include",
         headers: {

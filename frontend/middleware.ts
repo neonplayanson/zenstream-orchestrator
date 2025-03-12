@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import appConfig from "./app/config";
 
 export async function middleware(req: NextRequest) {
   const destination = req.nextUrl.pathname;
@@ -17,7 +18,7 @@ export async function middleware(req: NextRequest) {
       }
 
       const response = await fetch(
-        "http://127.0.0.1:9090/api/user/authenticate",
+        `${appConfig.apiUrl}/api/user/authenticate`,
         {
           method: "POST",
           credentials: "include",
@@ -25,7 +26,7 @@ export async function middleware(req: NextRequest) {
             Username: username,
             TOKEN: token,
           },
-        },
+        }
       );
 
       if (response.status === 202) {
@@ -40,16 +41,13 @@ export async function middleware(req: NextRequest) {
     const path_components = destination.split("/");
     const invite_id = path_components[path_components.length - 1];
 
-    const response = await fetch(
-      "http://127.0.0.1:9090/api/user/check_invite",
-      {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          url: invite_id,
-        },
+    const response = await fetch(`${appConfig.apiUrl}/api/user/check_invite`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        url: invite_id,
       },
-    );
+    });
 
     if (response.status === 202) {
       return NextResponse.next();
