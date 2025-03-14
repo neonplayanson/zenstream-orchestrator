@@ -1,9 +1,16 @@
 "use client";
 
 import React, { useCallback, useState } from "react";
-import { FaKey } from "react-icons/fa";
-import { Gadget, Greeting, Codeblock, Button } from "./components/page_util";
+import { FaKey, FaHome } from "react-icons/fa";
+import {
+  Gadget,
+  Greeting,
+  Codeblock,
+  Button,
+  Input,
+} from "./components/page_util";
 import generateInvite from "./modules/invites";
+import appConfig from "../config";
 
 /**
  * Dashboard component that displays the main dashboard page.
@@ -11,11 +18,13 @@ import generateInvite from "./modules/invites";
  */
 export default function Dashboard() {
   const [invite, setInvite] = useState<string>("ur mother");
+  // Add state for the API URL input value
+  const [apiUrlInput, setApiUrlInput] = useState<string>(appConfig.apiUrl);
+  // Optional state for tracking update status
+  const [updateStatus, setUpdateStatus] = useState<string>("");
 
   /**
    * Handles the generation of a new invite link.
-   * Makes an asynchronous call to generate a unique invite code and
-   * updates the invite state with a formatted registration URL.
    */
   const handleGenerateInvite = useCallback(async () => {
     try {
@@ -25,6 +34,21 @@ export default function Dashboard() {
       console.error("Error generating invite:", error);
     }
   }, []);
+
+  /**
+   * Handles updating the API URL config.
+   */
+  const handleUpdateApiUrl = useCallback(async () => {
+    try {
+      await appConfig.updateApiUrl(apiUrlInput);
+      setUpdateStatus("URL updated successfully!");
+      setTimeout(() => setUpdateStatus(""), 3000);
+    } catch (error) {
+      console.error("Error updating URL:", error);
+      setUpdateStatus("Failed to update URL");
+      setTimeout(() => setUpdateStatus(""), 3000);
+    }
+  }, [apiUrlInput]);
 
   return (
     <div className="w-full h-screen bg-schemes-dark-surface-container-lowest items-start justify-start">
@@ -46,6 +70,31 @@ export default function Dashboard() {
                   onClick={handleGenerateInvite}
                 />
               </form>
+            }
+          />
+          <Gadget
+            title="Backend Address"
+            icon={<FaHome className="size-5 text-schemes-dark-on-background" />}
+            content={
+              <div className="h-full w-full flex flex-col items-start justify-start gap-4 py-6">
+                <Input
+                  value={apiUrlInput}
+                  onChange={(e) => setApiUrlInput(e.target.value)}
+                />
+
+                <div className="flex-col w-full items-center justify-between">
+                  <Button
+                    label="Update"
+                    buttontype="button"
+                    onClick={handleUpdateApiUrl}
+                  />
+                  {updateStatus && (
+                    <span className="text-schemes-dark-on-background text-md pl-3">
+                      {updateStatus}
+                    </span>
+                  )}
+                </div>
+              </div>
             }
           />
         </div>

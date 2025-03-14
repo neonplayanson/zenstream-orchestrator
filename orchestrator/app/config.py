@@ -25,10 +25,10 @@ class Config:
         Args:
             logger (Logger): The logger instance.
         """
-        self._base_address = {
-            "frontend": "http://127.0.0.1:3000",
-            "backend": "http://127.0.0.1:5090"
-        }
+        self._base_addresses = {
+        "development": "http://172.0.0.1:3000",
+        "production": "https://google.com"
+    }
 
         self.create_database()
 
@@ -106,9 +106,9 @@ class Config:
         return self._database
 
     @property
-    def base_address(self):
+    def base_address(self, environment: str = "development"):
         """Get the base address configuration."""
-        return self._base_address
+        return self._base_addresses[environment]
 
 
 config = Config()
