@@ -110,7 +110,7 @@ export default function Navbar() {
 
       router.push("/auth/login");
     },
-    [router]
+    [router],
   );
 
   return (
