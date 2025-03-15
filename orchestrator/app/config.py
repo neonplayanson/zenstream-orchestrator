@@ -26,9 +26,9 @@ class Config:
             logger (Logger): The logger instance.
         """
         self._base_addresses = {
-        "development": "http://172.0.0.1:3000",
-        "production": "https://google.com"
-    }
+            "development": "http://172.0.0.1:3000",
+            "production": "https://google.com",
+        }
 
         self.create_database()
 
