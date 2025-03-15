@@ -126,7 +126,7 @@ function Button({ label, buttontype, onClick }: ButtonProps) {
         await onClick();
       }
     },
-    [onClick],
+    [onClick]
   );
 
   return (
@@ -140,4 +140,23 @@ function Button({ label, buttontype, onClick }: ButtonProps) {
   );
 }
 
-export { Greeting, Gadget, Codeblock, Checkbox, Button };
+function Input({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <div className="flex flex-row h-12 w-full bg-schemes-dark-surface-dim shadow-inner shadow-schemes-dark-surface-container-lowest rounded-xl">
+      <input
+        type="text"
+        value={value}
+        onChange={onChange}
+        className="flex text-schemes-dark-on-background bg-opacity-0 font-mono font-normal text-md whitespace-nowrap px-3 w-full h-full"
+      />
+    </div>
+  );
+}
+
+export { Greeting, Gadget, Codeblock, Checkbox, Button, Input };
