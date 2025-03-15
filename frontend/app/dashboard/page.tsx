@@ -38,15 +38,17 @@ export default function Dashboard() {
   /**
    * Handles updating the API URL config.
    */
-  const handleUpdateApiUrl = useCallback(async () => {
+  const handleUpdateApiUrl = useCallback((): Promise<void> => {
     try {
-      await appConfig.updateApiUrl(apiUrlInput);
+      appConfig.updateApiUrl(apiUrlInput);
       setUpdateStatus("URL updated successfully!");
       setTimeout(() => setUpdateStatus(""), 3000);
+      return Promise.resolve();
     } catch (error) {
       console.error("Error updating URL:", error);
       setUpdateStatus("Failed to update URL");
       setTimeout(() => setUpdateStatus(""), 3000);
+      return Promise.reject(new Error("Failed to update URL"));
     }
   }, [apiUrlInput]);
 

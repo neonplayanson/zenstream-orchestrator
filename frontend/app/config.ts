@@ -7,7 +7,7 @@ interface AppConfig {
   };
   isDev: boolean;
   apiUrl: string;
-  updateApiUrl(url: string): void;
+  updateApiUrl(url: string): Promise<void>;
 }
 
 const isDev = process.env.NODE_ENV !== "production";
@@ -21,9 +21,10 @@ const appConfig: AppConfig = {
   get apiUrl() {
     return isDev ? this.environment.development : this.environment.production;
   },
-  async updateApiUrl(url: string) {
+  async updateApiUrl(url: string): Promise<void> {
     this.environment.development = url;
-    await saveConfig(this.environment);
+    saveConfig(this.environment);
+    return Promise.resolve();
   },
 };
 
