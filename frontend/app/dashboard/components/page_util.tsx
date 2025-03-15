@@ -126,7 +126,7 @@ function Button({ label, buttontype, onClick }: ButtonProps) {
         await onClick();
       }
     },
-    [onClick]
+    [onClick],
   );
 
   return (

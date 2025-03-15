@@ -32,8 +32,12 @@ class Orchestrator:
             self.app,
             resources={
                 r"/api/*": {
-                    "origins": ["http://localhost:3000", "http://127.0.0.1:3000", f"{Config()._base_addresses['development']}", f"{Config()._base_addresses['production']}"],
-
+                    "origins": [
+                        "http://localhost:3000",
+                        "http://127.0.0.1:3000",
+                        f"{Config()._base_addresses['development']}",
+                        f"{Config()._base_addresses['production']}",
+                    ],
                     "supports_credentials": True,
                     "allow_headers": [
                         "Content-Type",
