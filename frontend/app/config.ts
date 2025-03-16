@@ -23,7 +23,7 @@ const appConfig: AppConfig = {
   },
   async updateApiUrl(url: string): Promise<void> {
     this.environment.development = url;
-    saveConfig(this.environment);
+    await saveConfig(this.environment);
     return Promise.resolve();
   },
 };
