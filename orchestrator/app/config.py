@@ -5,6 +5,7 @@ from hashlib import sha256
 
 class Config:
     _instance = None
+    _isDev = True
 
     def __new__(
         cls,
@@ -106,9 +107,11 @@ class Config:
         return self._database
 
     @property
-    def base_address(self, environment: str = "development"):
+    def base_address(self):
         """Get the base address configuration."""
-        return self._base_addresses[environment]
+        if self._isDev:
+            return self._base_addresses["development"]
+        return self._base_addresses["production"]
 
 
 config = Config()
