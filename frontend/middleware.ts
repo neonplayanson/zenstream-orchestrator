@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import appConfig from "./app/config";
+import appConfig from "./app-old/config";
 
 export async function middleware(req: NextRequest) {
   const destination = req.nextUrl.pathname;
@@ -26,7 +26,7 @@ export async function middleware(req: NextRequest) {
             Username: username,
             TOKEN: token,
           },
-        },
+        }
       );
 
       if (response.status === 202) {

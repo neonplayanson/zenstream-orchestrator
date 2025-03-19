@@ -2,8 +2,8 @@
 import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
-import cookieManager from "@/app/dashboard/cookie_manager";
-import appConfig from "@/app/config";
+import cookieManager from "@/app-old/dashboard/cookie_manager";
+import appConfig from "@/app-old/config";
 
 /**
  * Register page component that displays the register form.
@@ -20,14 +20,14 @@ export default function RegisterPage() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setUsername(e.target.value);
     },
-    [],
+    []
   );
 
   const handlePasswordChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(e.target.value);
     },
-    [],
+    []
   );
 
   const handleSubmit = useCallback(
@@ -53,7 +53,7 @@ export default function RegisterPage() {
             headers: {
               url: inviteId,
             },
-          },
+          }
         );
         if (deletion.status === 200) {
           router.push("/auth/login");
@@ -64,7 +64,7 @@ export default function RegisterPage() {
         alert("An error occurred, please try again later.");
       }
     },
-    [username, password, inviteId, router],
+    [username, password, inviteId, router]
   );
 
   return (

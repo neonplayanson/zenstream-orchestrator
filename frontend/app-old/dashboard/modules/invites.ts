@@ -1,5 +1,5 @@
 import { getCookie } from "cookies-next";
-import appConfig from "@/app/config";
+import appConfig from "@/app-old/config";
 
 /**
  * Generates an invite by making a POST request to the server.
@@ -18,7 +18,7 @@ async function generateInvite(): Promise<string | undefined> {
           Username: String(user) || "",
           TOKEN: String(token) || "",
         },
-      },
+      }
     );
 
     if (response.ok) {

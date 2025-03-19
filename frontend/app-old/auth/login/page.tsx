@@ -2,8 +2,8 @@
 import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import cookieManager from "@/app/dashboard/cookie_manager";
-import appConfig from "@/app/config";
+import cookieManager from "@/app-old/dashboard/cookie_manager";
+import appConfig from "@/app-old/config";
 
 /**
  * Login page component that displays the login form.
@@ -18,14 +18,14 @@ export default function LoginPage() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setUsername(e.target.value);
     },
-    [],
+    []
   );
 
   const handlePasswordChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(e.target.value);
     },
-    [],
+    []
   );
 
   const handleLogin = useCallback(
@@ -50,7 +50,7 @@ export default function LoginPage() {
         alert("Invalid credentials");
       }
     },
-    [username, password, router],
+    [username, password, router]
   );
 
   return (
