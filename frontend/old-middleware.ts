@@ -1,3 +1,5 @@
+/**
+
 import { type NextRequest, NextResponse } from "next/server";
 import appConfig from "./app-old/config";
 
@@ -60,3 +62,5 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: ["/", "/dashboard", "/auth/register/:path*"],
 };
+
+*/
